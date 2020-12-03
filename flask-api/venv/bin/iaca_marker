@@ -1,0 +1,12 @@
+#!/home/mikolaj/Desktop/test1/neo4j-movies-template/flask-api/venv/bin/python3
+# EASY-INSTALL-ENTRY-SCRIPT: 'kerncraft==0.8.7','console_scripts','iaca_marker'
+__requires__ = 'kerncraft==0.8.7'
+import re
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(
+        load_entry_point('kerncraft==0.8.7', 'console_scripts', 'iaca_marker')()
+    )

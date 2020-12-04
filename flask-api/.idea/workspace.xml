@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b47cc3a6-9d29-4b17-9126-685828de51f6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Engine/Neo4jConnector.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Neo4jConnector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/models/FieldOfStudy.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/models/FieldOfStudy.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/models/Student.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/models/Student.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/src/components/Breadcrumbs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/src/components/Breadcrumbs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/src/components/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/src/components/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/src/pages/FieldOfStudy.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/src/pages/FieldOfStudy.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/src/pages/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/src/pages/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/src/pages/Profile.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/src/redux/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/src/redux/reducers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/src/redux/sagas/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../web/src/redux/sagas/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web/src/routes/Routes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../web/src/routes/Routes.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +44,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../GuessFlag" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -127,6 +116,7 @@
       <updated>1606058581113</updated>
       <workItem from="1606058582307" duration="22707000" />
       <workItem from="1606577220833" duration="41683000" />
+      <workItem from="1606994610204" duration="8176000" />
     </task>
     <servers />
   </component>

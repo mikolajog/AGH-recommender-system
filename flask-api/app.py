@@ -93,7 +93,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return wrapped
 
-class StudentModel(Schema):
+class UserModel(Schema):
     type = 'object'
     properties = {
         'index_number': {
@@ -105,9 +105,6 @@ class StudentModel(Schema):
         'email': {
             'type': 'string',
         },
-        'avatar': {
-            'type': 'string',
-        }
     }
 
 
@@ -142,7 +139,7 @@ class Register(Resource):
         'responses': {
             '201': {
                 'description': 'Your new user',
-                'schema': StudentModel,
+                'schema': UserModel,
             },
             '400': {
                 'description': 'Error message(s)',
@@ -226,53 +223,6 @@ class Login(Resource):
         return {
             'token': user.api_key
         }
-
-def serialize_full_user(user):
-
-    return {
-        'index_number': user.index_number,
-        'name': user.name,
-        'email': user.email,
-        'field_of_studies'
-        'avatar': {
-            'full_size': 'https://www.gravatar.com/avatar/{}?d=retro'.format(hash_avatar(user.name))
-        }
-    }
-
-
-class UserMe(Resource):
-    @swagger.doc({
-        'tags': ['users'],
-        'summary': 'Get your user',
-        'description': 'Get your user',
-        'parameters': [{
-            'name': 'Authorization',
-            'in': 'header',
-            'type': 'string',
-            'required': True,
-            'default': 'Token <token goes here>',
-        }],
-        'responses': {
-            '200': {
-                'description': 'the user',
-                'schema': StudentModel,
-            },
-            '401': {
-                'description': 'invalid / missing authentication',
-            },
-        }
-    })
-    @login_required
-    def post(self):
-        data = request.get_json()
-        token = data['token']
-        connector = Neo4jConnector()
-        user = connector.get_student_by_token(token)
-        if user is None:
-            return {'token': 'user does not exist'}, 400
-
-        return serialize_full_user(user)
-
 
 class ApiDocs(Resource):
     def get(self, path=None):
@@ -646,11 +596,15 @@ class ConnectFieldOfStudy(Resource):
         user = connector.get_student_by_token(token)
         if user is None:
             return {'token': 'user does not exist'}, 400
-        print(fos.get('name'), fos.get('startyears'), fos.get('faculty'))
+        print(fos.get('fieldofstudyname'), fos.get('startyears'), fos.get('faculty'))
         fieldofstudy = connector.get_field_of_study(fos.get('fieldofstudyname'), fos.get('startyears'), fos.get('faculty'))
         if fieldofstudy is None:
             return {'fieldofstudy': 'no such field of study'}, 401
-        result = connector.connect_student_studies_field_of_study(user, fieldofstudy, fos.get('on_semester'))
+        result2 = connector.get_all_fields_of_study_for_student(user)
+        if result2 is None:
+            result = connector.connect_student_studies_field_of_study(user, fieldofstudy, fos.get('on_semester'))
+        elif fieldofstudy in result2:
+            return [serialize_full_fields_of_study(field.faculty, field.name, field.start_years, connector.get_student_on_semester_for_fieldofstudy(user, field)) for field in result2], 200
         result2 = connector.get_all_fields_of_study_for_student(user)
         if result2 is None:
             return [],200
@@ -685,6 +639,7 @@ class DisconnectFieldOfStudy(Resource):
         }})
     def post(self):
         data = request.get_json()
+        print(data)
         fos = data.get('fieldofstudy')
         token = data.get('token')
         print(token, fos.get('on_semester'))
@@ -692,7 +647,7 @@ class DisconnectFieldOfStudy(Resource):
         user = connector.get_student_by_token(token)
         if user is None:
             return {'token': 'user does not exist'}, 400
-        print(fos.get('name'), fos.get('startyears'), fos.get('faculty'))
+        print(fos.get('fieldofstudy'), fos.get('startyears'), fos.get('faculty'))
         fieldofstudy = connector.get_field_of_study(fos.get('fieldofstudyname'), fos.get('startyears'), fos.get('faculty'))
         if fieldofstudy is None:
             return {'fieldofstudy': 'no such field of study'}, 401
@@ -741,10 +696,50 @@ class GetMyFieldofStudyNames(Resource):
         return [serialize_full_fields_of_study(field.faculty, field.name, field.start_years, connector.get_student_on_semester_for_fieldofstudy(user, field)) for
                 field in result2], 200
 
+
+def serialize_full_user(user):
+    return {
+        'index_number': user.index_number,
+        'name': user.name,
+        'email': user.email,
+    }
+
+
+class GetUserMe(Resource):
+    @swagger.doc({
+        'tags': ['users'],
+        'summary': 'Get your user',
+        'description': 'Get your user',
+        'parameters': [
+        {
+            'name': 'token',
+            'description': 'token',
+            'in': 'path',
+            'type': 'string',
+        }],
+        'responses': {
+            '200': {
+                'description': 'the user',
+                'schema': UserModel,
+            },
+            '401': {
+                'description': 'invalid / missing authentication',
+            },
+        }
+    })
+
+    def get(self, token):
+        connector = Neo4jConnector()
+        user = connector.get_student_by_token(token)
+        if user is None:
+            return {'token': 'user does not exist'}, 400
+
+        return serialize_full_user(user)
+
 api.add_resource(ApiDocs, '/docs', '/docs/<path:path>')
 api.add_resource(Register, '/api/v0/register')
 api.add_resource(Login,'/api/v0/login')
-api.add_resource(UserMe, '/api/v0/users/me')
+api.add_resource(GetUserMe, '/api/v0/user/get/me/<string:token>')
 
 api.add_resource(AddKeywords, '/api/v0/keywords/add')
 api.add_resource(GetKeywords, '/api/v0/keywords/get/me/<string:token>')

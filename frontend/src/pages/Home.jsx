@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
+import {BrowserRouter as Redirect} from 'react-router-dom';
 import Loading from '../components/Loading.jsx';
 import Carousel from '../components/Carousel.jsx';
 import _ from 'lodash';
@@ -7,10 +8,15 @@ import AuthenticatedPage from './AuthenticatedPage.jsx';
 import UserRating from '../components/UserRating.jsx';
 import * as ProfileActions from '../redux/actions/ProfileActions';
 import InputValidator from '../components/validation/InputValidator.jsx';
+import {getProfile} from '../redux/actions/ProfileActions';
 
-import * as MovieActions from '../redux/actions/MovieActions';
+import * as Actions from '../redux/actions/FieldofstudyActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import UserSession from '../UserSession.js';
+import settings from '../config/settings';
+
+
 
 class Home extends React.Component {
   constructor() {
@@ -20,24 +26,34 @@ class Home extends React.Component {
       password: '',
       canSubmit: false,
       errors:{},
-      fieldofstudy: [{name: 'Informatyka'}, {name:'Automatyka'}]
+      recfaculty: '',
+      recfieldofstudy: '',
+      recstartyears:'',
+      recon_semester: ''
     };
-
+    this.changefieldofstudy = this.changefieldofstudy.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount(){ 
+    if(UserSession.getToken()===null){this.props.history.push('/login');}
+    else{this.props.getProfile();}
   }
 
   render() {
+    const {apiBaseURL} = settings;
+    if(UserSession.getToken()===null){this.props.history.push('/login');}
+    var {name, indexNumber, email} = this.props.fieldofstudy.profile;
     var {index_number, password, canSubmit} = this.props;
     var {errors} = this.props;
     var {fieldofstudy} = this.state;
-    let fieldsofstudyList = fieldofstudy.length > 0
-		&& fieldofstudy.map((item, i) => {
-		return (
-			<option key={i} value={item.name}>{item.name}</option>
-		)
-	}, this);
+    var {errors, possiblefaculties, possiblefieldsofstudies,currentfieldsofstudy, isFetching} = this.props.fieldofstudy;
+    if(Array.from(currentfieldsofstudy).length >0){
+      var current_fields = Array.from(currentfieldsofstudy).map((anObjectMapped, index) => {
+        return (
+        <option key={anObjectMapped.fieldofstudyname +'/'+anObjectMapped.onSemester+'/'+anObjectMapped.startYears+'/'+anObjectMapped.faculty} value={anObjectMapped.fieldofstudyname +'/'+anObjectMapped.onSemester+'/'+anObjectMapped.startYears+'/'+anObjectMapped.faculty}>{anObjectMapped.fieldofstudyname +'/'+anObjectMapped.onSemester+'/'+anObjectMapped.startYears+'/'+anObjectMapped.faculty}</option>  
+        );})
+    }
+    else{var current_fields = null;}
     return (
       <div>
 <div className="row">
@@ -50,14 +66,14 @@ class Home extends React.Component {
               <div className="row">
               <div className="small-12 medium-10 large-10 columns">
               <InputValidator fieldName="Numer indeksu"
-                              errors={errors}
-                              shouldValidateOnBlur={true}>
+                              
+                              shouldValidateOnBlur={false}>
                 Numer indeksu:
                 <input type="text"
                        name="index_number"
-                       placeholder="Mkołaj Ogarek*"
-                       required
-                       value={index_number}
+                       placeholder={indexNumber}
+                       
+                       value={indexNumber}
                        onChange={this.changeUser}
                        disabled={true}/>
               </InputValidator>
@@ -65,15 +81,15 @@ class Home extends React.Component {
             </div>
             <div className="row">
               <div className="small-12 medium-10 large-10 columns">
-              <InputValidator fieldName="Numer indeksu"
-                              errors={errors}
-                              shouldValidateOnBlur={true}>
+              <InputValidator fieldName="Imie"
+                              
+                              shouldValidateOnBlur={false}>
                 Imię i nazwisko:
                 <input type="text"
                        name="index_number"
-                       placeholder="Mkołaj Ogarek*"
-                       required
-                       value={index_number}
+                       placeholder={name}
+                       
+                       value={name}
                        onChange={this.changeUser}
                        disabled={true}/>
               </InputValidator>
@@ -81,15 +97,15 @@ class Home extends React.Component {
             </div>
             <div className="row">
               <div className="small-12 medium-10 large-10 columns">
-              <InputValidator fieldName="Numer indeksu"
-                              errors={errors}
-                              shouldValidateOnBlur={true}>
+              <InputValidator fieldName="Mail"
+                              
+                              shouldValidateOnBlur={false}>
                 E-mail:
                 <input type="text"
                        name="index_number"
-                       placeholder="Mkołaj Ogarek*"
-                       required
-                       value={index_number}
+                       placeholder={email}
+                  
+                       value={email}
                        onChange={this.changeUser}
                        disabled={true}/>
               </InputValidator>
@@ -111,8 +127,8 @@ class Home extends React.Component {
     <div className="nt-box-row">
     <div className="row">
     <div className="small-12 medium-10 large-10 columns">
-    <select>
-				{fieldsofstudyList}
+    <select name="field" id="fieldofstudy-select" onClick={this.changefieldofstudy}>
+				{current_fields}
 			</select>
     </div>
   </div>
@@ -152,19 +168,33 @@ class Home extends React.Component {
 </div>
       );
   }
+
+  changefieldofstudy(event){
+    this.props.getUserFieldsOfStudy();
+    var fields = event.target.value.split('/');
+    var faculty = fields[3]
+    var fieldofstudyname = fields[0]
+    var startyears = fields[2]
+    var on_semester = fields[1]
+      this.setState({
+      recfaculty: faculty,
+      recfieldofstudy: fieldofstudyname,
+      recstartyears:startyears,
+      recon_semester: on_semester,
+        canSubmit: faculty && fieldofstudyname && startyears && on_semester
+      })
+  }
 } 
 Home.displayName = 'Home';
 
 function mapStateToProps(state) {
   return {
-    // genres: state.genres.items,
-
-    // movies: state.movies
+    fieldofstudy: _.get(state, 'fieldofstudy'),
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(MovieActions, dispatch);
+  return bindActionCreators(Actions, dispatch);
 }
 
 // Wrap the component to inject dispatch and state into it

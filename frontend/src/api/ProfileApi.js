@@ -8,7 +8,7 @@ export default class ProfileApi {
 
   static getProfile() {
     var token =  UserSession.getToken()
-    return axios.post(`${apiBaseURL}/users/me`, {token});
+    return axios.get(`${apiBaseURL}/user/get/me/${token}`);
   }
 
   static getProfileRatings() {

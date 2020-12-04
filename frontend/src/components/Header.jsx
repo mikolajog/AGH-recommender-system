@@ -4,6 +4,7 @@ import {logout} from '../redux/actions/AuthActions';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import logoImg from '../assets/logo.jpg';
+import UserSession from '../UserSession';
 
 class Header extends React.Component {
   render() {
@@ -21,7 +22,7 @@ class Header extends React.Component {
         <ul className="nt-app-header-links">
           <li>
             <a className="nt-app-header-link"
-               href="https://github.com/mikolajog/recommendation"
+               href="https://github.com/mikolajog/AGH-recommender-system"
                target="_blank"
                rel="noopener noreferrer">
               GitHub Project
@@ -30,13 +31,7 @@ class Header extends React.Component {
         </ul>
         <div className="nt-app-header-profile-links">
           <div className="right">
-            {
-              profile ?
-                <div className="nt-app-header-avatar" style={this.getAvatarStyle(profile)}>
-                  <Link to="/profile" title={`profile: ${profile.username}`}/>
-                </div>
-                : null
-            }
+            
             <div className="log-container">
               {isLoggedIn ? <button onClick={this.logout.bind(this)} className="buttonLink logout"><Link to="/login">Wyloguj</Link></button> : <Link to="/login">Zaloguj</Link>}
             </div>
@@ -49,11 +44,9 @@ class Header extends React.Component {
     );
   }
 
-  getAvatarStyle(profile) {
-    return {background: `url(${_.get(profile, 'avatar.fullSize')}) center`};
-  }
 
   logout() {
+    UserSession.setToken('');
     this.props.dispatch(logout());
   }
 }

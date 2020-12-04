@@ -12,6 +12,7 @@ import axios from '../api/axios';
 import UserSession from '../UserSession';
 import _ from 'lodash';
 
+
 class Keywords extends React.Component {
   constructor(props) {
     super(props);
@@ -31,8 +32,10 @@ class Keywords extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getKeywords();
-
+    const {apiBaseURL} = settings;
+    if(UserSession.getToken()===null){this.props.history.push('/login');}
+    else{
+    this.props.getKeywords();}
   }
 
   checkifCanDeleteKeyword(){
@@ -170,6 +173,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     keywords: _.get(state, 'keywords'),
+    fieldofstudy: _.get(state, 'fieldofstudy'),
   };
 }
 

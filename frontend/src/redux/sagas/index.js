@@ -7,6 +7,7 @@ import movieFlow from './movieFlow';
 import personFlow from './personFlow';
 import userFlow from './userFlow';
 import keywordsFlow from './keywordsFlow';
+import fieldofstudyFlow from './fieldofstudyFlow';
 
 export default function* root() {
   yield all([
@@ -17,6 +18,7 @@ export default function* root() {
     fork(movieFlow),
     fork(userFlow),
     fork(personFlow),
-    fork(keywordsFlow)
+    fork(keywordsFlow),
+    fork(fieldofstudyFlow)
   ]);
 }

@@ -9,12 +9,14 @@ import movies from './movies';
 import person from './person';
 import user from './user';
 import keywords from './keywords';
+import fieldofstudy from './fieldofstudy';
 
 const createRootReducer = (history) => combineReducers({
   router: connectRouter(history),
   notifications,
   auth,
   signup,
+  fieldofstudy,
   profile,
   genres,
   movies,

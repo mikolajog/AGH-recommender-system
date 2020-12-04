@@ -21,6 +21,12 @@ class ProfessorsRatings extends React.Component {
 
   }
 
+  componentDidMount() {
+    const {apiBaseURL} = settings;
+    if(UserSession.getToken()===null){this.props.history.push('/login');}
+    
+  }
+
   render() {
     return (
       <div>

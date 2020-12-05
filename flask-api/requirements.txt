@@ -12,3 +12,6 @@ numpy==1.8.2
 neomodel==4.0.1
 pystempel==1.2.0
 stop-words==2018.7.23
+
+requests~=2.25.0
+scikit-learn~=0.23.2

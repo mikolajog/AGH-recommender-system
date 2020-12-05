@@ -11,14 +11,28 @@ import settings from '../config/settings';
 import axios from '../api/axios';
 import UserSession from '../UserSession';
 import _ from 'lodash';
+import StarRatings from 'react-star-ratings';
 
 class CoursesRatings extends React.Component {
   constructor() {
     super();
     this.state = {
-      errors:{}
+      errors:{},
+      rating:0,
+      faculty: '',
+      fieldofstudy: '',
+      startyears:'',
+      on_semester: ''
     }
+    this.changeRating = this.changeRating.bind(this);
 
+  }
+  
+
+  changeRating(newRating, name ) {
+    this.setState({
+      rating: newRating
+    });
   }
 
   componentDidMount() {
@@ -26,16 +40,51 @@ class CoursesRatings extends React.Component {
     if(UserSession.getToken()===null){this.props.history.push('/login');}
   }
 
+
   render() {
+
+    var courses_compulsory=  <p>Przedmiot 1 &nbsp;
+    <StarRatings
+      rating={this.state.rating}
+      starRatedColor="#0078a0"
+      starHoverColor="#3498db"
+      changeRating={this.changeRating}
+      numberOfStars={5}
+      starDimension="40px"
+      starSpacing="15px"
+      name='rating'
+    />
+    </p>
+
     return (
       <div>
 <div className="row">
           <div className="small-12 columns">
             <div className="nt-box">
               <div className="nt-box-title">
-              CoursesRatings
+              Oceny kursów
+              <div className="row text-center">
+              <button className="btn"
+                      type="submit"
+                      name="submit-login"
+                      onClick={this.addFieldOfStudy}
+                      disabled={!this.state.canAdd}>
+                Aktualizuj
+              </button>
+            </div>
               </div>
-             
+              <div className="nt-box">
+              <div className="nt-box-title">
+                Obowiązkowe:
+                </div>
+                {courses_compulsory}
+              </div>
+              <p></p>
+              <div className="nt-box">
+              <div className="nt-box-title">
+                Obieralne:
+                </div>
+      </div>
               </div>
             </div>
           </div>

@@ -16,6 +16,7 @@ from flask_json import FlaskJSON, json_response
 
 from neo4j import GraphDatabase, basic_auth
 
+from .Engine.RecommendationEngine import RecommendationEngine
 from .Engine.Neo4jConnector import Neo4jConnector
 
 load_dotenv(find_dotenv())
@@ -736,6 +737,204 @@ class GetUserMe(Resource):
 
         return serialize_full_user(user)
 
+class CourseResponse(Schema):
+    type = 'object'
+    properties = {
+            'schema':{
+                'name': {
+                    'type':'string'
+                },
+                'rating':{
+                    'type': 'string'
+                },
+            }
+        }
+
+def serialize_course(name, rating):
+    return {
+            'name': name,
+            'rating': rating,
+            }
+
+class CoursesModelPost(Schema):
+    type = 'object'
+    properties = {
+        'compulsory': {
+            'type': 'array',
+            'items': CourseResponse
+        },
+        'elective': {
+            'type': 'array',
+            'items': CourseResponse
+        },
+    }
+
+class GetMyCourses(Resource):
+    @swagger.doc({
+        'tags': ['courses'],
+        'summary': 'Get your courses',
+        'description': 'Get your courses',
+        'parameters': [
+        {
+            'name': 'token',
+            'description': 'token',
+            'in': 'path',
+            'type': 'string',
+        },
+            {
+                'name': 'faculty',
+                'description': 'faculty',
+                'in': 'path',
+                'type': 'string',
+            },
+            {
+                'name': 'fieldofstudy',
+                'description': 'fieldofstudy',
+                'in': 'path',
+                'type': 'string',
+            },
+            {
+                'name': 'startyears',
+                'description': 'startyears',
+                'in': 'path',
+                'type': 'string',
+            }
+        ],
+        'responses': {
+            '200': {
+                'description': 'array of courses and ratings',
+                'schema': {
+                    'type': 'object',
+                    'items': CoursesModelPost,
+                }
+            },
+            '400': {
+                'description': 'no such user',
+            },
+            '401': {
+                'description': 'field of study does not exist',
+            },
+        }
+    })
+
+    def get(self, token, faculty, fieldofstudy, startyears):
+        fieldofstudyname = fieldofstudy
+        connector = Neo4jConnector()
+        user = connector.get_student_by_token(token)
+        if user is None:
+            return {'token': 'user does not exist'}, 400
+        fieldofstudy = connector.get_field_of_study(fieldofstudyname, startyears, faculty)
+        if fieldofstudy is None:
+            return {'fieldofstudy': 'no such field of study'}, 401
+        courses = connector.get_all_courses_on_given_fieldofstudy(user, faculty,fieldofstudyname, startyears)
+        compulsory = []
+        electives = []
+        for course in courses:
+            if connector.is_course_elective(course, faculty, startyears, fieldofstudyname):
+                electives.append(serialize_course(course.name, connector.get_student_rating_course(user, course, faculty, startyears, fieldofstudyname)))
+            else:
+                compulsory.append(serialize_course(course.name, connector.get_student_rating_course(user, course, faculty, startyears, fieldofstudyname)))
+        return {'compulsory': compulsory, 'elective': electives},200
+
+class UpdateMyCourses(Resource):
+    @swagger.doc({
+        'tags': ['courses'],
+        'summary': 'Update your courses',
+        'description': 'Update your courses',
+        'parameters': [
+        {
+            'name': 'body',
+                'in': 'body',
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'compulsory': {
+                            'type': 'array',
+                            'items': CourseResponse
+                            },
+                        'elective': {
+                            'type': 'array',
+                            'items': CourseResponse
+                        },
+                        'faculty': {
+                            'type': 'string'
+                        },
+                        'fieldofstudy': {
+                            'type': 'string'
+                        },
+                        'onsemester': {
+                            'type': 'string'
+                        },
+                        'token': {
+                            'type': 'string'
+                        },
+                        'startyears':{
+                            'type': 'string'
+                        }
+                    }
+                }
+        }],
+        'responses': {
+            '200': {
+                'description': 'array of courses and ratings',
+                'schema': {
+                    'type': 'object',
+                    'items': CoursesModelPost,
+                }
+            },
+            '400': {
+                'description': 'no such user',
+            },
+            '401': {
+                'description': 'field of study does not exist',
+            },
+        }
+    })
+
+    def post(self):
+        data = request.get_json()
+        compulsory = data.get('compulsory')
+        connector = Neo4jConnector()
+        token = data.get('token')
+        fieldofstudyname = data.get('fieldofstudy')
+        onsemester = data.get('onsemester')
+        faculty = data.get('faculty')
+        startyears = data.get('startyears')
+        elective = data.get('elective')
+        user = connector.get_student_by_token(token)
+
+        if user is None:
+            return {'token': 'user does not exist'}, 400
+        for course in compulsory:
+            print(course.get('name'))
+            fos = connector.get_field_of_study(fieldofstudyname, startyears, faculty)
+            print(fos)
+            c = connector.get_course_by_field_of_study(course.get('name'), fos)
+            rating = connector.get_student_rating_course(user, c, faculty, startyears, fieldofstudyname)
+            if int(rating)==0:
+                connector.connect_student_evaluates_course(user, c, course.get('rating'))
+        for course in elective:
+            fos = connector.get_field_of_study(fieldofstudyname, startyears, faculty)
+            c = connector.get_course_by_field_of_study(course.get('name'), fos)
+            rating = connector.get_student_rating_course(user, c, faculty, startyears, fieldofstudyname)
+            if int(rating)==0:
+                connector.connect_student_evaluates_course(user, c, course.get('rating'))
+        courses = connector.get_all_courses_on_given_fieldofstudy(user, faculty, fieldofstudyname, startyears)
+        compulsory = []
+        electives = []
+        for course in courses:
+            if connector.is_course_elective(course, faculty, startyears, fieldofstudyname):
+                electives.append(serialize_course(course.name,
+                                                  connector.get_student_rating_course(user, course, faculty, startyears,
+                                                                                      fieldofstudyname)))
+            else:
+                compulsory.append(serialize_course(course.name,
+                                                   connector.get_student_rating_course(user, course, faculty,
+                                                                                       startyears, fieldofstudyname)))
+        return {'compulsory': compulsory, 'elective': electives}, 200
+
+
+
 api.add_resource(ApiDocs, '/docs', '/docs/<path:path>')
 api.add_resource(Register, '/api/v0/register')
 api.add_resource(Login,'/api/v0/login')
@@ -753,6 +952,9 @@ api.add_resource(ConnectFieldOfStudy, '/api/v0/fieldofstudy/connect/me')
 api.add_resource(DisconnectFieldOfStudy, '/api/v0/fieldofstudy/disconnect/me')
 
 api.add_resource(GetMyFieldofStudyNames, '/api/v0/fieldofstudy/get/me/<string:token>')
+
+api.add_resource(GetMyCourses, '/api/v0/courses/get/me/<string:token>/<string:faculty>/<string:fieldofstudy>/<string:startyears>')
+api.add_resource(UpdateMyCourses, '/api/v0/courses/updateratings/me')
 
 # def get_db():
 #     if not hasattr(g, 'neo4j_db'):

@@ -36,7 +36,7 @@ class ProfessorsRatings extends React.Component {
               <div className="nt-box-title">
               ProfessorsRatings
               </div>
-             
+            
               </div>
             </div>
           </div>

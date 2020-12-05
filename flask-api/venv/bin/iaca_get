@@ -1,4 +1,4 @@
-#!/home/mikolaj/Desktop/test1/neo4j-movies-template/flask-api/venv/bin/python3
+#!/home/mikolaj/Documents/Projekt/flask-api/venv/bin/python3
 # EASY-INSTALL-ENTRY-SCRIPT: 'kerncraft==0.8.7','console_scripts','iaca_get'
 __requires__ = 'kerncraft==0.8.7'
 import re

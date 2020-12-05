@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/mikolaj/Desktop/test1/neo4j-movies-template/flask-api/venv"
+VIRTUAL_ENV="/home/mikolaj/Documents/Projekt/flask-api/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

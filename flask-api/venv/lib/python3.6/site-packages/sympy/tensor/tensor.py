@@ -919,7 +919,7 @@ class TensorIndexType(Basic):
     dummy_name : name of the head of dummy indices
     dim : dimension, it can be a symbol or an integer or ``None``
     eps_dim : dimension of the epsilon tensor
-    metric_symmetry : integer that denotes metric symmetry or `None` for no metirc
+    metric_symmetry : integer that denotes metric symmetry or ``None`` for no metirc
     metric_name : string with the name of the metric tensor
 
     Attributes
@@ -933,15 +933,15 @@ class TensorIndexType(Basic):
     Notes
     =====
 
-    The possible values of the `metric_symmetry` parameter are:
+    The possible values of the ``metric_symmetry`` parameter are:
 
         ``1``   :   metric tensor is fully symmetric
         ``0``   :   metric tensor possesses no index symmetry
         ``-1``  :   metric tensor is fully antisymmetric
-        ``None``:   there is no metric tensor (metric equals to `None`)
+        ``None``:   there is no metric tensor (metric equals to ``None``)
 
     The metric is assumed to be symmetric by default. It can also be set
-    to a custom tensor by the `.set_metric()` method.
+    to a custom tensor by the ``.set_metric()`` method.
 
     If there is a metric the metric is used to raise and lower indices.
 
@@ -1922,13 +1922,13 @@ class TensExpr(Expr, metaclass=_TensorMetaclass):
     def __rmul__(self, other):
         return TensMul(other, self).doit()
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         other = _sympify(other)
         if isinstance(other, TensExpr):
             raise ValueError('cannot divide by a tensor')
         return TensMul(self, S.One/other).doit()
 
-    def __rdiv__(self, other):
+    def __rtruediv__(self, other):
         raise ValueError('cannot divide by a tensor')
 
     def __pow__(self, other):
@@ -1953,9 +1953,6 @@ class TensExpr(Expr, metaclass=_TensorMetaclass):
 
     def __rpow__(self, other):
         raise NotImplementedError
-
-    __truediv__ = __div__
-    __rtruediv__ = __rdiv__
 
     @property
     @abstractmethod
@@ -2651,8 +2648,7 @@ class Tensor(TensExpr):
 
     _index_structure = None  # type: _IndexStructure
 
-    def __new__(cls, tensor_head, indices, **kw_args):
-        is_canon_bp = kw_args.pop('is_canon_bp', False)
+    def __new__(cls, tensor_head, indices, *, is_canon_bp=False, **kw_args):
         indices = cls._parse_indices(tensor_head, indices)
         obj = Basic.__new__(cls, tensor_head, Tuple(*indices), **kw_args)
         obj._index_structure = _IndexStructure.from_indices(*indices)
@@ -2750,10 +2746,10 @@ class Tensor(TensExpr):
         indices = im.get_indices()
         return self._set_indices(*indices, is_canon_bp=is_canon_bp)
 
-    def _set_indices(self, *indices, **kw_args):
+    def _set_indices(self, *indices, is_canon_bp=False, **kw_args):
         if len(indices) != self.ext_rank:
             raise ValueError("indices length mismatch")
-        return self.func(self.args[0], indices, is_canon_bp=kw_args.pop('is_canon_bp', False)).doit()
+        return self.func(self.args[0], indices, is_canon_bp=is_canon_bp).doit()
 
     def _get_free_indices_set(self):
         return set([i[0] for i in self._index_structure.free])
@@ -3763,12 +3759,11 @@ class TensMul(TensExpr, AssocOp):
         indices = im.get_indices()
         return self._set_indices(*indices, is_canon_bp=is_canon_bp)
 
-    def _set_indices(self, *indices, **kw_args):
+    def _set_indices(self, *indices, is_canon_bp=False, **kw_args):
         if len(indices) != self.ext_rank:
             raise ValueError("indices length mismatch")
         args = list(self.args)[:]
         pos = 0
-        is_canon_bp = kw_args.pop('is_canon_bp', False)
         for i, arg in enumerate(args):
             if not isinstance(arg, TensExpr):
                 continue

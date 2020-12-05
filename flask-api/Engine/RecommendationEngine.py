@@ -14,9 +14,9 @@ class RecommendationEngine():
         self.connector = Neo4jConnector()
 
     def load_db_scripts(self):
-        os.system('./db_scripts/deploy_fieldOfStudy_Informatyka20172018WEAIIiB.py')
-        os.system('./db_scripts/deploy_fieldOfStudy_Informatyka20162017WEAIIiB.py')
-        os.system('./db_scripts/deploy_fieldOfStudy_Informatyka20152016WEAIIiB.py')
+        os.system(os.getcwd()+'/Engine/db_scripts/deploy_fieldOfStudy_Informatyka20172018WEAIIiB.py')
+        os.system(os.getcwd()+'/Engine/db_scripts/deploy_fieldOfStudy_Informatyka20162017WEAIIiB.py')
+        os.system(os.getcwd()+'/Engine/db_scripts/deploy_fieldOfStudy_Informatyka20152016WEAIIiB.py')
         self.get_and_connect_keywords_to_courses()
 
     def load_students(self):

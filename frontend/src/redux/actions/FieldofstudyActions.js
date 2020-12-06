@@ -118,3 +118,37 @@ export function getProfileFailure(error) {
 export function getProfileInit() {
   return {type: Types.FIELDOFSTUDY_GET_GETPROFILE_INIT};
 }
+
+///
+export function getCourses(payload) {
+  return {type: Types.FIELDOFSTUDY_GET_GETCOURSES_GET, payload};
+}
+
+export function getCoursesSuccess(payload) {
+  return {type: Types.FIELDOFSTUDY_GET_GETCOURSES_SUCCESS, payload};
+}
+
+export function getCoursesFailure(error) {
+  return {type: Types.FIELDOFSTUDY_GET_GETCOURSES_FAILURE, error};
+}
+
+export function getCoursesInit() {
+  return {type: Types.FIELDOFSTUDY_GET_GETCOURSES_INIT};
+}
+
+///
+export function updateCourses(payload) {
+  return {type: Types.FIELDOFSTUDY_POST_UPDATECOURSES_POST, payload};
+}
+
+export function updateCoursesSuccess(payload) {
+  return {type: Types.FIELDOFSTUDY_POST_UPDATECOURSES_SUCCESS, payload};
+}
+
+export function updateCoursesFailure(error) {
+  return {type: Types.FIELDOFSTUDY_POST_UPDATECOURSES_FAILURE, error};
+}
+
+export function updateCoursesInit() {
+  return {type: Types.FIELDOFSTUDY_POST_UPDATECOURSES_INIT};
+}

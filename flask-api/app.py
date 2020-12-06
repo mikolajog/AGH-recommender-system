@@ -913,11 +913,17 @@ class UpdateMyCourses(Resource):
             rating = connector.get_student_rating_course(user, c, faculty, startyears, fieldofstudyname)
             if int(rating)==0:
                 connector.connect_student_evaluates_course(user, c, course.get('rating'))
+            else:
+                connector.disconnect_student_evaluates_course(user, c, rating)
+                connector.connect_student_evaluates_course(user, c, course.get('rating'))
         for course in elective:
             fos = connector.get_field_of_study(fieldofstudyname, startyears, faculty)
             c = connector.get_course_by_field_of_study(course.get('name'), fos)
             rating = connector.get_student_rating_course(user, c, faculty, startyears, fieldofstudyname)
             if int(rating)==0:
+                connector.connect_student_evaluates_course(user, c, course.get('rating'))
+            else:
+                connector.disconnect_student_evaluates_course(user, c, rating)
                 connector.connect_student_evaluates_course(user, c, course.get('rating'))
         courses = connector.get_all_courses_on_given_fieldofstudy(user, faculty, fieldofstudyname, startyears)
         compulsory = []
@@ -932,6 +938,188 @@ class UpdateMyCourses(Resource):
                                                    connector.get_student_rating_course(user, course, faculty,
                                                                                        startyears, fieldofstudyname)))
         return {'compulsory': compulsory, 'elective': electives}, 200
+
+
+
+#############################
+
+class ProfessorResponse(Schema):
+    type = 'object'
+    properties = {
+            'schema':{
+                'name': {
+                    'type':'string'
+                },
+                'rating':{
+                    'type': 'string'
+                },
+            }
+        }
+
+def serialize_professor(name, rating):
+    return {
+            'name': name,
+            'rating': rating,
+            }
+
+class ProfessorModelPost(Schema):
+    type = 'object'
+    properties = {
+        'professors': {
+            'type': 'array',
+            'items': ProfessorResponse
+        }
+    }
+
+class GetMyProfessors(Resource):
+    @swagger.doc({
+        'tags': ['professors'],
+        'summary': 'Get your professors',
+        'description': 'Get your professors',
+        'parameters': [
+        {
+            'name': 'token',
+            'description': 'token',
+            'in': 'path',
+            'type': 'string',
+        },
+            {
+                'name': 'faculty',
+                'description': 'faculty',
+                'in': 'path',
+                'type': 'string',
+            },
+            {
+                'name': 'fieldofstudy',
+                'description': 'fieldofstudy',
+                'in': 'path',
+                'type': 'string',
+            },
+            {
+                'name': 'startyears',
+                'description': 'startyears',
+                'in': 'path',
+                'type': 'string',
+            }
+        ],
+        'responses': {
+            '200': {
+                'description': 'array of professors and ratings',
+                'schema': {
+                    'type': 'object',
+                    'items': ProfessorModelPost,
+                }
+            },
+            '400': {
+                'description': 'no such user',
+            },
+            '401': {
+                'description': 'field of study does not exist',
+            },
+        }
+    })
+
+    def get(self, token, faculty, fieldofstudy, startyears):
+        fieldofstudyname = fieldofstudy
+        connector = Neo4jConnector()
+        user = connector.get_student_by_token(token)
+        if user is None:
+            return {'token': 'user does not exist'}, 400
+        fieldofstudy = connector.get_field_of_study(fieldofstudyname, startyears, faculty)
+        if fieldofstudy is None:
+            return {'fieldofstudy': 'no such field of study'}, 401
+        professors = connector.get_all_professors_on_given_fieldofstudy(user, faculty,fieldofstudyname, startyears)
+        prof = []
+        prof_names = []
+        for professor in professors:
+            if professor.name not in prof_names:
+                prof.append(serialize_professor(professor.name, connector.get_student_rating_professor(user, professor)))
+                prof_names.append(professor.name)
+        return {'professors': prof},200
+
+class UpdateMyProfessors(Resource):
+    @swagger.doc({
+        'tags': ['professors'],
+        'summary': 'Update your professors',
+        'description': 'Update your professors',
+        'parameters': [
+        {
+            'name': 'body',
+                'in': 'body',
+                'schema': {
+                    'type': 'object',
+                    'properties': {
+                        'professors': {
+                            'type': 'array',
+                            'items': ProfessorResponse
+                            },
+                        'faculty': {
+                            'type': 'string'
+                        },
+                        'fieldofstudy': {
+                            'type': 'string'
+                        },
+                        'onsemester': {
+                            'type': 'string'
+                        },
+                        'token': {
+                            'type': 'string'
+                        },
+                        'startyears':{
+                            'type': 'string'
+                        }
+                    }
+                }
+        }],
+        'responses': {
+            '200': {
+                'description': 'array of courses and ratings',
+                'schema': {
+                    'type': 'object',
+                    'items': ProfessorModelPost,
+                }
+            },
+            '400': {
+                'description': 'no such user',
+            },
+            '401': {
+                'description': 'field of study does not exist',
+            },
+        }
+    })
+
+    def post(self):
+        data = request.get_json()
+        professors = data.get('professors')
+        connector = Neo4jConnector()
+        token = data.get('token')
+        fieldofstudyname = data.get('fieldofstudy')
+        onsemester = data.get('onsemester')
+        faculty = data.get('faculty')
+        startyears = data.get('startyears')
+        user = connector.get_student_by_token(token)
+
+        if user is None:
+            return {'token': 'user does not exist'}, 400
+        for professor in professors:
+            prof = connector.get_professor(professor.get('name'))
+            rating = professor.get('rating')
+            if(rating)==0:
+                connector.connect_student_rates_professor(user,prof, rating)
+            else:
+                connector.disconnect_student_rates_professor(user, prof, connector.get_student_rating_professor(user, prof))
+                connector.connect_student_rates_professor(user, prof, rating)
+
+        professors = connector.get_all_professors_on_given_fieldofstudy(user, faculty, fieldofstudyname, startyears)
+        prof = []
+        prof_names = []
+        for professor in professors:
+            if professor.name not in prof_names:
+                prof.append(
+                    serialize_professor(professor.name, connector.get_student_rating_professor(user, professor)))
+                prof_names.append(professor.name)
+        return {'professors': prof}, 200
+
 
 
 
@@ -955,6 +1143,9 @@ api.add_resource(GetMyFieldofStudyNames, '/api/v0/fieldofstudy/get/me/<string:to
 
 api.add_resource(GetMyCourses, '/api/v0/courses/get/me/<string:token>/<string:faculty>/<string:fieldofstudy>/<string:startyears>')
 api.add_resource(UpdateMyCourses, '/api/v0/courses/updateratings/me')
+
+api.add_resource(GetMyProfessors, '/api/v0/professors/get/me/<string:token>/<string:faculty>/<string:fieldofstudy>/<string:startyears>')
+api.add_resource(UpdateMyProfessors, '/api/v0/professors/updateratings/me')
 
 # def get_db():
 #     if not hasattr(g, 'neo4j_db'):

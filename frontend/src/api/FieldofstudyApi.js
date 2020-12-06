@@ -33,7 +33,19 @@ export default class FieldofstudyApi {
   }
 
   static getProfile() {
-    var token =  UserSession.getToken()
+    var token =  UserSession.getToken();
     return axios.get(`${apiBaseURL}/user/get/me/${token}`);
   }
+
+  static getCourses({payload}) {
+    var token =  UserSession.getToken();
+    return axios.get(`${apiBaseURL}/courses/get/me/${token}/${payload.faculty}/${payload.fieldofstudy}/${payload.startyears}`);
+  }
+
+  static updateCourses({payload}) {
+    var token =  UserSession.getToken();
+    var {faculty, fieldofstudy, startyears, onsemester, elective, compulsory} = payload;
+    return axios.post(`${apiBaseURL}/courses/updateratings/me`, {faculty, fieldofstudy, startyears, onsemester,elective,compulsory, token});
+  }s
+
 }

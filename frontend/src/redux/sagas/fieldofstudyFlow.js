@@ -13,6 +13,8 @@ export default function* fieldofstudyFlow() {
     takeEvery(Types.FIELDOFSTUDY_POST_CONNECTUSERWITHFIELDOFSTUDY_POST, connectUserWithFieldofstudy),
     takeEvery(Types.FIELDOFSTUDY_POST_DISCONNECTUSERWITHFIELDOFSTUDY_POST, disconnectUserWithFieldofstudy),
     takeEvery(Types.FIELDOFSTUDY_GET_GETPROFILE_GET, getProfile),
+    takeEvery(Types.FIELDOFSTUDY_GET_GETCOURSES_GET, getCourses),
+    takeEvery(Types.FIELDOFSTUDY_POST_UPDATECOURSES_POST, updateCourses),
   ]);
 }
 
@@ -83,6 +85,26 @@ function* getProfile() {
   }
   catch (error) {
     yield put(Actions.getProfileFailure(error));
+  }
+}
+
+function* getCourses(payload) {
+  try {
+    const response = yield call(FieldofstudyApi.getCourses, payload);
+    yield put(Actions.getCoursesSuccess(response));
+  }
+  catch (error) {
+    yield put(Actions.getCoursesFailure(error));
+  }
+}
+
+function* updateCourses(payload) {
+  try {
+    const response = yield call(FieldofstudyApi.updateCourses, payload);
+    yield put(Actions.updateCoursesSuccess(response));
+  }
+  catch (error) {
+    yield put(Actions.updateCoursesFailure(error));
   }
 }
 

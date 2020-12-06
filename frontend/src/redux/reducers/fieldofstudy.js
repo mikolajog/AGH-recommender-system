@@ -9,7 +9,8 @@ function getInitialState() {
     possiblestartyears:{},
     errors: {},
     currentfieldsofstudy:[],
-    profile:{}
+    profile:{},
+    courses:{}
   };
 }
 
@@ -22,6 +23,8 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
     case Types.FIELDOFSTUDY_POST_DISCONNECTUSERWITHFIELDOFSTUDY_INIT:
     case Types.FIELDOFSTUDY_GET_GETUSERFIELDSOFSTUDY_INIT:
     case Types.FIELDOFSTUDY_GET_GETPROFILE_INIT:
+    case Types.FIELDOFSTUDY_GET_GETCOURSES_INIT:
+    case Types.FIELDOFSTUDY_POST_UPDATECOURSES_INIT:
       return getInitialState();
       case Types.FIELDOFSTUDY_GET_GETPOSSIBLEFIELDSOFSTUDY_GET:
       return {
@@ -60,7 +63,9 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
     case Types.FIELDOFSTUDY_POST_CONNECTUSERWITHFIELDOFSTUDY_FAILURE:
     case Types.FIELDOFSTUDY_POST_DISCONNECTUSERWITHFIELDOFSTUDY_FAILURE:
     case Types.FIELDOFSTUDY_GET_GETUSERFIELDSOFSTUDY_FAILURE:
+    case Types.FIELDOFSTUDY_GET_GETCOURSES_FAILURE:
       case Types.FIELDOFSTUDY_GET_GETPROFILE_FAILURE:
+    case Types.FIELDOFSTUDY_POST_UPDATECOURSES_FAILURE:
       return {
         isFetching: false,
         errors: ErrorUtils.getApiErrors(action.error)
@@ -79,8 +84,21 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
           ...state,
           isFetching: true
         };
+      case Types.FIELDOFSTUDY_POST_UPDATECOURSES_POST:
+        return {
+          ...state,
+          isFetching: true, 
+          currentfieldsofstudy: action.payload.currentfieldsofstudy
+        };
+      case Types.FIELDOFSTUDY_GET_GETCOURSES_GET:
+          return {
+            ...state,
+            isFetching: true,
+            currentfieldsofstudy: action.payload.currentfieldsofstudy
+          };
       case Types.FIELDOFSTUDY_POST_CONNECTUSERWITHFIELDOFSTUDY_SUCCESS:
         case Types.FIELDOFSTUDY_POST_DISCONNECTUSERWITHFIELDOFSTUDY_SUCCESS:
+        case Types.FIELDOFSTUDY_POST_UPDATECOURSES_SUCCESS:
         return {
           ...state,
           isFetching: false
@@ -99,7 +117,16 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
           // possiblefaculties: '',
           currentfieldsofstudy: action.payload
         };
+        case Types.FIELDOFSTUDY_GET_GETCOURSES_SUCCESS:
+        return {
+          ...state,
+          isFetching: false,
+          // possiblefaculties: '',
+          courses: action.payload
+        };
     default:
       return state;
   }
 }
+
+

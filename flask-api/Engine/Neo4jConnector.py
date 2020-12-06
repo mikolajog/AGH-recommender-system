@@ -124,13 +124,18 @@ class Neo4jConnector():
 
     def connect_student_rates_professor(self, student, professor, rating):
         student.professor.connect(professor, {'rating': rating})
-        student.professor.connect(professor, {'rating': rating})
 
     def disconnect_student_likes_keyword(self, student, keyword):
         student.keywords.disconnect(keyword)
 
     def disconnect_student_studies_field_of_study(self, student, field_of_study):
         student.field_of_study.disconnect(field_of_study)
+
+    def disconnect_student_rates_professor(self, student, professor, rating):
+        student.professor.disconnect(professor)
+
+    def disconnect_student_evaluates_course(self, student, course, rating):
+        student.course_marks.disconnect(course)
 
     def get_all_courses(self):
         results, meta = db.cypher_query(
@@ -170,9 +175,29 @@ class Neo4jConnector():
         courses = [Course.inflate(row[0]) for row in results]
         return courses
 
+    def get_all_professors_on_given_fieldofstudy(self, user, faculty, fieldofstudy, startyears):
+        results, meta = db.cypher_query(
+            'MATCH (s:Student)-[r:STUDIES]->(f:FieldOfStudy) WHERE (f.faculty=\"' + faculty + '\" AND f.start_years=\"' + startyears + '\" AND f.name=\"' + fieldofstudy + '\") RETURN r.on_semester')
+        semester = [row[0] for row in results]
+        print("Hej        ", semester)
+        results, meta = db.cypher_query(
+            'MATCH (p:Professor)-[r1:TEACHES]->(c:Course)-[r:HAS]->(f:FieldOfStudy) WHERE (f.faculty=\"' + faculty + '\" AND f.start_years=\"' + startyears + '\" AND f.name=\"' + fieldofstudy + '\" AND c.taught_on_semester<=' + str(
+                semester[0]) + ') RETURN p')
+        professors = [Professor.inflate(row[0]) for row in results]
+        return professors
+
     def get_student_rating_course(self, student, course, faculty, startyears, fieldofstudy):
         results, meta = db.cypher_query(
             'MATCH (s:Student)-[r:EVALUATES]->(c:Course)-[r1:HAS]->(f:FieldOfStudy) WHERE(s.index_number=' + str(student.index_number) + ' AND c.name=\"' + course.name + '\" AND f.faculty=\"' + faculty + '\" AND f.start_years=\"' + startyears + '\" AND f.name=\"' + fieldofstudy + '\") RETURN r.rating')
+        rating = [row[0] for row in results]
+        if len(rating) == 0:
+            return 0
+        else:
+            return rating[0]
+
+    def get_student_rating_professor(self, student, professor):
+        results, meta = db.cypher_query(
+            'MATCH (s:Student)-[r:RATES]->(p:Professor) WHERE(s.index_number=' + str(student.index_number) + ' AND p.name=\"' + professor.name + '\") RETURN r.rating')
         rating = [row[0] for row in results]
         if len(rating) == 0:
             return 0

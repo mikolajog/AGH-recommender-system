@@ -47,6 +47,7 @@ class Header extends React.Component {
 
   logout() {
     UserSession.setToken('');
+    this.state = {};
     this.props.dispatch(logout());
   }
 }

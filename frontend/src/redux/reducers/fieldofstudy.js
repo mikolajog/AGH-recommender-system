@@ -10,7 +10,8 @@ function getInitialState() {
     errors: {},
     currentfieldsofstudy:[],
     profile:{},
-    courses:{}
+    courses:{},
+    professors:{}
   };
 }
 
@@ -25,6 +26,8 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
     case Types.FIELDOFSTUDY_GET_GETPROFILE_INIT:
     case Types.FIELDOFSTUDY_GET_GETCOURSES_INIT:
     case Types.FIELDOFSTUDY_POST_UPDATECOURSES_INIT:
+    case Types.FIELDOFSTUDY_GET_GETPROFESSORS_INIT:
+    case Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_INIT:
       return getInitialState();
       case Types.FIELDOFSTUDY_GET_GETPOSSIBLEFIELDSOFSTUDY_GET:
       return {
@@ -64,8 +67,10 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
     case Types.FIELDOFSTUDY_POST_DISCONNECTUSERWITHFIELDOFSTUDY_FAILURE:
     case Types.FIELDOFSTUDY_GET_GETUSERFIELDSOFSTUDY_FAILURE:
     case Types.FIELDOFSTUDY_GET_GETCOURSES_FAILURE:
-      case Types.FIELDOFSTUDY_GET_GETPROFILE_FAILURE:
+    case Types.FIELDOFSTUDY_GET_GETPROFILE_FAILURE:
     case Types.FIELDOFSTUDY_POST_UPDATECOURSES_FAILURE:
+    case Types.FIELDOFSTUDY_GET_GETPROFESSORS_FAILURE:
+    case Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_FAILURE:
       return {
         isFetching: false,
         errors: ErrorUtils.getApiErrors(action.error)
@@ -90,15 +95,32 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
           isFetching: true, 
           currentfieldsofstudy: action.payload.currentfieldsofstudy
         };
+        case Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_POST:
+        return {
+          ...state,
+          isFetching: true, 
+          currentfieldsofstudy: action.payload.currentfieldsofstudy
+        };
       case Types.FIELDOFSTUDY_GET_GETCOURSES_GET:
           return {
             ...state,
             isFetching: true,
             currentfieldsofstudy: action.payload.currentfieldsofstudy
           };
+          case Types.FIELDOFSTUDY_GET_GETPROFESSORS_GET:
+            return {
+              ...state,
+              isFetching: true,
+              currentfieldsofstudy: action.payload.currentfieldsofstudy
+            };
       case Types.FIELDOFSTUDY_POST_CONNECTUSERWITHFIELDOFSTUDY_SUCCESS:
         case Types.FIELDOFSTUDY_POST_DISCONNECTUSERWITHFIELDOFSTUDY_SUCCESS:
         case Types.FIELDOFSTUDY_POST_UPDATECOURSES_SUCCESS:
+        return {
+          ...state,
+          isFetching: false
+        };
+        case Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_SUCCESS:
         return {
           ...state,
           isFetching: false
@@ -124,9 +146,14 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
           // possiblefaculties: '',
           courses: action.payload
         };
+        case Types.FIELDOFSTUDY_GET_GETPROFESSORS_SUCCESS:
+        return {
+          ...state,
+          isFetching: false,
+          // possiblefaculties: '',
+          professors: action.payload
+        };
     default:
       return state;
   }
 }
-
-

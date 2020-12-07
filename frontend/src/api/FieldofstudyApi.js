@@ -46,6 +46,17 @@ export default class FieldofstudyApi {
     var token =  UserSession.getToken();
     var {faculty, fieldofstudy, startyears, onsemester, elective, compulsory} = payload;
     return axios.post(`${apiBaseURL}/courses/updateratings/me`, {faculty, fieldofstudy, startyears, onsemester,elective,compulsory, token});
-  }s
+  }
+
+  static getProfessors({payload}) {
+    var token =  UserSession.getToken();
+    return axios.get(`${apiBaseURL}/professors/get/me/${token}/${payload.faculty}/${payload.fieldofstudy}/${payload.startyears}`);
+  }
+
+  static updateProfessors({payload}) {
+    var token =  UserSession.getToken();
+    var {faculty, fieldofstudy, startyears, onsemester, professors} = payload;
+    return axios.post(`${apiBaseURL}/professors/updateratings/me`, {faculty, fieldofstudy, startyears, onsemester,professors, token});
+  }
 
 }

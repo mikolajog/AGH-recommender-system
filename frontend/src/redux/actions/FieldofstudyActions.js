@@ -152,3 +152,37 @@ export function updateCoursesFailure(error) {
 export function updateCoursesInit() {
   return {type: Types.FIELDOFSTUDY_POST_UPDATECOURSES_INIT};
 }
+
+///
+export function getProfessors(payload) {
+  return {type: Types.FIELDOFSTUDY_GET_GETPROFESSORS_GET, payload};
+}
+
+export function getProfessorsSuccess(payload) {
+  return {type: Types.FIELDOFSTUDY_GET_GETPROFESSORS_SUCCESS, payload};
+}
+
+export function getProfessorsFailure(error) {
+  return {type: Types.FIELDOFSTUDY_GET_GETPROFESSORS_FAILURE, error};
+}
+
+export function getProfessorsInit() {
+  return {type: Types.FIELDOFSTUDY_GET_GETPROFESSORS_INIT};
+}
+
+///
+export function updateProfessors(payload) {
+  return {type: Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_POST, payload};
+}
+
+export function updateProfessorsSuccess(payload) {
+  return {type: Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_SUCCESS, payload};
+}
+
+export function updateProfessorsFailure(error) {
+  return {type: Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_FAILURE, error};
+}
+
+export function updateProfessorsInit() {
+  return {type: Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_INIT};
+}

@@ -6,8 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="b47cc3a6-9d29-4b17-9126-685828de51f6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/Neo4jConnector.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Neo4jConnector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/api/FieldofstudyApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/FieldofstudyApi.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/ProfessorsRatings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/ProfessorsRatings.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/SignupStatus.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/SignupStatus.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/redux/actions/FieldofstudyActionTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/redux/actions/FieldofstudyActionTypes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/redux/actions/FieldofstudyActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/redux/actions/FieldofstudyActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/redux/reducers/fieldofstudy.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/redux/reducers/fieldofstudy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/redux/sagas/fieldofstudyFlow.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/redux/sagas/fieldofstudyFlow.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +170,7 @@
       <workItem from="1606058582307" duration="22707000" />
       <workItem from="1606577220833" duration="41683000" />
       <workItem from="1606994610204" duration="32331000" />
-      <workItem from="1607242635283" duration="6681000" />
+      <workItem from="1607242635283" duration="9728000" />
     </task>
     <servers />
   </component>

@@ -1,5 +1,5 @@
 {
-    "name": "NT Movie APP",
+    "name": "APP Recommender",
     "env": {
         "API_URL": {
             "description": "URL of the API endpoint",

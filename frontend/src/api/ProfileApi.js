@@ -10,12 +10,4 @@ export default class ProfileApi {
     var token =  UserSession.getToken()
     return axios.get(`${apiBaseURL}/user/get/me/${token}`);
   }
-
-  static getProfileRatings() {
-    return axios.get(`${apiBaseURL}/movies/rated`);
-  }
-
-  static getProfileRecommendations() {
-    return axios.get(`${apiBaseURL}/movies/recommended`);
-  }
 }

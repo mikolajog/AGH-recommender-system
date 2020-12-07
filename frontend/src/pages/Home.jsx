@@ -5,7 +5,6 @@ import Loading from '../components/Loading.jsx';
 import Carousel from '../components/Carousel.jsx';
 import _ from 'lodash';
 import AuthenticatedPage from './AuthenticatedPage.jsx';
-import UserRating from '../components/UserRating.jsx';
 import * as ProfileActions from '../redux/actions/ProfileActions';
 import InputValidator from '../components/validation/InputValidator.jsx';
 import {getProfile} from '../redux/actions/ProfileActions';

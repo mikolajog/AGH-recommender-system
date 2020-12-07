@@ -18,9 +18,9 @@ class SignupStatus extends React.Component {
 
     return (
       <div>
-      <p>You have successfully created an account.</p>
+      <p>Utworzyłeś konto.</p>
                 <div>
-                  <Link to="/" className="button ba-default-btn">Homepage</Link>
+                  <Link to="/" className="button ba-default-btn">Strona główna</Link>
                 </div>
                 </div>
     );

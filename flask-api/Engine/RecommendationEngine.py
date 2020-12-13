@@ -62,14 +62,14 @@ class RecommendationEngine():
 
         return dict_with_stemmed_keywords
 
-    def get_recommendation(self, mode, student):
+    def get_recommendation(self, mode, student, faculty, fieldofstudyname, startyears, onsemester):
         if mode == "individual":
-            return ContentBasedFiletring().recommend(student)
+            return ContentBasedFiletring().recommend(student, faculty,fieldofstudyname, startyears, onsemester)
         elif mode == "team":
-            return CollaborationFiltering().recommend(student)
+            return CollaborationFiltering().recommend(student,faculty,fieldofstudyname, startyears, onsemester)
         elif mode == "hybrid":
-            content_based = ContentBasedFiletring().recommend(student)
-            collaboration = CollaborationFiltering().recommend(student)
+            content_based = ContentBasedFiletring().recommend(student,faculty,fieldofstudyname, startyears, onsemester)
+            collaboration = CollaborationFiltering().recommend(student,faculty,fieldofstudyname, startyears, onsemester)
             return self.get_hybrid_recommendation(content_based, collaboration)
         else:
             return "Error"

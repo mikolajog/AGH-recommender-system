@@ -17,6 +17,7 @@ export default function* fieldofstudyFlow() {
     takeEvery(Types.FIELDOFSTUDY_POST_UPDATECOURSES_POST, updateCourses),
     takeEvery(Types.FIELDOFSTUDY_GET_GETPROFESSORS_GET, getProfessors),
     takeEvery(Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_POST, updateProfessors),
+    takeEvery(Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_GET, getRecommendations),
   ]);
 }
 
@@ -127,6 +128,16 @@ function* updateProfessors(payload) {
   }
   catch (error) {
     yield put(Actions.updateProfessorsFailure(error));
+  }
+}
+
+function* getRecommendations(payload) {
+  try {
+    const response = yield call(FieldofstudyApi.getRecommendations, payload);
+    yield put(Actions.getRecommendationsSuccess(response));
+  }
+  catch (error) {
+    yield put(Actions.getRecommendationsFailure(error));
   }
 }
 

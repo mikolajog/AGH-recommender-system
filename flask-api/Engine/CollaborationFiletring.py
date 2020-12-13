@@ -13,10 +13,10 @@ class CollaborationFiltering():
         self.output_dict = {}
         self.weights = {}
 
-    def recommend(self, student):
-        self.output_dict = self.initialize_electives(student)
-        self.weights = self.initialize_electives(student)
-        field_of_study = self.connector.get_field_of_study_for_student(student)
+    def recommend(self, student,faculty,fieldofstudyname, startyears, onsemester):
+        self.output_dict = self.initialize_electives(student,faculty,fieldofstudyname, startyears, onsemester)
+        self.weights = self.initialize_electives(student,faculty,fieldofstudyname, startyears, onsemester)
+        field_of_study = self.connector.get_field_of_study(faculty=faculty, name=fieldofstudyname, start_years=startyears)
         for key,value in self.output_dict.items():
             # here will be functions for each subject callculations
             self.recommendation_based_on_average_professor_rating(self.connector.get_course_by_field_of_study(key, field_of_study))
@@ -27,9 +27,9 @@ class CollaborationFiltering():
                 self.output_dict[key] = self.output_dict[key] / self.weights[key]
         return self.output_dict
 
-    def initialize_electives(self, student):
+    def initialize_electives(self, student,faculty,fieldofstudyname, startyears, onsemester):
         dict_with_electives = {}
-        for course in self.connector.get_student_electives_on_next_semester(student):
+        for course in self.connector.get_student_electives_on_next_semester(student,faculty,fieldofstudyname, startyears):
             dict_with_electives[course.name] = 0
         return dict_with_electives
 

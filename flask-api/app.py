@@ -14,6 +14,7 @@ from flask_restful import Resource, reqparse
 from flask_restful_swagger_2 import Api, swagger, Schema
 from flask_json import FlaskJSON, json_response
 
+from .Engine.RecommendationEngine import RecommendationEngine
 from .Engine.Neo4jConnector import Neo4jConnector
 
 load_dotenv(find_dotenv())
@@ -1058,6 +1059,8 @@ class UpdateMyProfessors(Resource):
         }
     })
 
+
+
     def post(self):
         data = request.get_json()
         professors = data.get('professors')
@@ -1092,6 +1095,86 @@ class UpdateMyProfessors(Resource):
 
 
 
+class GetMyRecommendation(Resource):
+    @swagger.doc({
+        'tags': ['recommendation'],
+        'summary': 'Get your recommendation',
+        'description': 'Get your recommendations',
+        'parameters': [
+        {
+            'name': 'token',
+            'description': 'token',
+            'in': 'path',
+            'type': 'string',
+        },
+            {
+                'name': 'faculty',
+                'description': 'faculty',
+                'in': 'path',
+                'type': 'string',
+            },
+            {
+                'name': 'fieldofstudy',
+                'description': 'fieldofstudy',
+                'in': 'path',
+                'type': 'string',
+            },
+            {
+                'name': 'startyears',
+                'description': 'startyears',
+                'in': 'path',
+                'type': 'string',
+            },
+            {
+                'name': 'onsemester',
+                'description': 'onsemester',
+                'in': 'path',
+                'type': 'string',
+            },
+            {
+                'name': 'mode',
+                'description': 'mode',
+                'in': 'path',
+                'type': 'string',
+            }
+        ],
+        'responses': {
+            '200': {
+                'description': 'array of professors and ratings',
+                'schema': {
+                    'type': 'array',
+                    'items': CourseResponse,
+                }
+            },
+            '400': {
+                'description': 'no such user',
+            },
+            '401': {
+                'description': 'field of study does not exist',
+            },
+        }
+    })
+
+    def get(self, token, faculty, fieldofstudy, startyears, onsemester, mode):
+        fieldofstudyname = fieldofstudy
+        connector = Neo4jConnector()
+        user = connector.get_student_by_token(token)
+        if user is None:
+            return {'token': 'user does not exist'}, 400
+        fieldofstudy = connector.get_field_of_study(fieldofstudyname, startyears, faculty)
+        if fieldofstudy is None:
+            return {'fieldofstudy': 'no such field of study'}, 401
+        engine = RecommendationEngine()
+        dict_with_courses = engine.get_recommendation(mode, user, faculty, fieldofstudyname, startyears, onsemester)
+
+        sorted_tuples = sorted(dict_with_courses.items(), key=lambda item: item[1], reverse=True)
+        print(sorted_tuples)
+        dict_with_courses = {k: v for k, v in sorted_tuples}
+
+        return [serialize_course(key, int(value*100)) for key, value in dict_with_courses.items()],200
+
+
+
 
 api.add_resource(ApiDocs, '/docs', '/docs/<path:path>')
 api.add_resource(Register, '/api/v0/register')
@@ -1116,3 +1199,5 @@ api.add_resource(UpdateMyCourses, '/api/v0/courses/updateratings/me')
 
 api.add_resource(GetMyProfessors, '/api/v0/professors/get/me/<string:token>/<string:faculty>/<string:fieldofstudy>/<string:startyears>')
 api.add_resource(UpdateMyProfessors, '/api/v0/professors/updateratings/me')
+
+api.add_resource(GetMyRecommendation, '/api/v0/recommendation/get/me/<string:token>/<string:faculty>/<string:fieldofstudy>/<string:startyears>/<string:onsemester>/<string:mode>')

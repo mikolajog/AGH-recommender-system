@@ -59,4 +59,10 @@ export default class FieldofstudyApi {
     return axios.post(`${apiBaseURL}/professors/updateratings/me`, {faculty, fieldofstudy, startyears, onsemester,professors, token});
   }
 
+  static getRecommendations({payload}) {
+    var token =  UserSession.getToken();
+    var {faculty, fieldofstudy, startyears, onsemester, mode} = payload;
+    return axios.get(`${apiBaseURL}/recommendation/get/me/${token}/${payload.faculty}/${payload.fieldofstudy}/${payload.startyears}/${payload.onsemester}/${payload.mode}`);
+  }
+
 }

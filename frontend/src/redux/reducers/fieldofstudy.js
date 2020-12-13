@@ -11,7 +11,8 @@ function getInitialState() {
     currentfieldsofstudy:[],
     profile:{},
     courses:{},
-    professors:{}
+    professors:{},
+    recommendations:{}
   };
 }
 
@@ -28,6 +29,7 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
     case Types.FIELDOFSTUDY_POST_UPDATECOURSES_INIT:
     case Types.FIELDOFSTUDY_GET_GETPROFESSORS_INIT:
     case Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_INIT:
+    case Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_INIT:
       return getInitialState();
       case Types.FIELDOFSTUDY_GET_GETPOSSIBLEFIELDSOFSTUDY_GET:
       return {
@@ -71,6 +73,7 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
     case Types.FIELDOFSTUDY_POST_UPDATECOURSES_FAILURE:
     case Types.FIELDOFSTUDY_GET_GETPROFESSORS_FAILURE:
     case Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_FAILURE:
+    case Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_FAILURE:
       return {
         isFetching: false,
         errors: ErrorUtils.getApiErrors(action.error)
@@ -90,6 +93,7 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
           isFetching: true
         };
       case Types.FIELDOFSTUDY_POST_UPDATECOURSES_POST:
+      case Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_GET:
         return {
           ...state,
           isFetching: true, 
@@ -153,7 +157,17 @@ export default function getPossibleFaculties(state = getInitialState(), action) 
           // possiblefaculties: '',
           professors: action.payload
         };
+        case Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_SUCCESS:
+        return {
+          ...state,
+          isFetching: false,
+          // possiblefaculties: '',
+          recommendations: action.payload
+        };
     default:
       return state;
   }
 }
+
+// FIELDOFSTUDY_GET_GETRECOMMENDATIONS_SUCCESS
+// FIELDOFSTUDY_GET_GETRECOMMENDATIONS_GET

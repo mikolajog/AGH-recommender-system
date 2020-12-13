@@ -236,9 +236,10 @@ class Neo4jConnector():
         semester = [row[0] for row in results]
         return (semester or [None])[0]
 
-    def get_student_electives_on_next_semester(self, student):
+    def get_student_electives_on_next_semester(self, student,faculty,fieldofstudyname, startyears):
+
         results, meta = db.cypher_query(
-            'MATCH (s:Student)-[r:STUDIES]->(f:FieldOfStudy)<-[r2:HAS]-(c:Course) WHERE (s.name=\"' + student.name + '\" and c.is_elective and s.is_on_semester + 1 = c.taught_on_semester) RETURN c')
+            'MATCH (s:Student)-[r:STUDIES]->(f:FieldOfStudy)<-[r2:HAS]-(c:Course) WHERE (s.name=\"' + student.name + '\" and s.index_number=' + str(student.index_number) + ' and f.name=\"' + fieldofstudyname + '\" and f.faculty=\"' + faculty + '\" and f.start_years=\"' + startyears + '\" and  c.is_elective and r.on_semester + 1 = c.taught_on_semester) RETURN c')
         courses = [Course.inflate(row[0]) for row in results]
         return courses
 

@@ -28,9 +28,13 @@ class Home extends React.Component {
       recfaculty: '',
       recfieldofstudy: '',
       recstartyears:'',
-      recon_semester: ''
+      recon_semester: '',
+      mode:'',
     };
     this.changefieldofstudy = this.changefieldofstudy.bind(this);
+    this.getIndividualRecom = this.getIndividualRecom.bind(this);
+    this.getHybridRecom = this.getHybridRecom.bind(this);
+    this.getTeamRecom = this.getTeamRecom.bind(this);
   }
 
   componentDidMount(){ 
@@ -39,6 +43,14 @@ class Home extends React.Component {
   }
 
   render() {
+    var recommendations = null;
+    var {recommendations} = this.props.fieldofstudy;
+    if(Array.isArray(recommendations)){
+      var current_rec = Array.from(recommendations).map((anObjectMapped, index) => {
+        return (
+        <li>{anObjectMapped.name} - {anObjectMapped.rating}%</li>
+        );})
+      }
     const {apiBaseURL} = settings;
     if(UserSession.getToken()===null){this.props.history.push('/login');}
     var {name, indexNumber, email} = this.props.fieldofstudy.profile;
@@ -137,27 +149,28 @@ class Home extends React.Component {
               <button className="btn"
                       type="submit"
                       name="submit-login"
-                      onClick={this.login}
-                      disabled={!canSubmit}>
+                      onClick={this.getIndividualRecom}
+                      disabled={!this.state.canSubmit}>
                 Indywidualny
               </button>
 &nbsp;
               <button className="btn"
                       type="submit"
                       name="submit-login"
-                      onClick={this.login}
-                      disabled={!canSubmit}>
+                      onClick={this.getHybridRecom}
+                      disabled={!this.state.canSubmit}>
                 Hybrydowy
               </button>
               &nbsp;
               <button className="btn"
                       type="submit"
                       name="submit-login"
-                      onClick={this.login}
-                      disabled={!canSubmit}>
+                      onClick={this.getTeamRecom}
+                      disabled={!this.state.canSubmit}>
                 Zespołowy
               </button>
             </div>
+    <div><ol>{current_rec}</ol></div>
     </div>
   </div>
     </div>
@@ -166,6 +179,37 @@ class Home extends React.Component {
 </div>
 </div>
       );
+  }
+  getIndividualRecom(event){
+    var {currentfieldsofstudy} = this.props.fieldofstudy;
+    var mode = "individual";
+    var faculty = this.state.recfaculty;
+    var fieldofstudy = this.state.recfieldofstudy;
+    var startyears = this.state.recstartyears;
+    var onsemester = this.state.recon_semester;
+
+    this.props.getRecommendations({currentfieldsofstudy, faculty, fieldofstudy, startyears, onsemester, mode})
+  }
+  getHybridRecom(event){
+    var {currentfieldsofstudy} = this.props.fieldofstudy;
+    var mode = "hybrid";
+    var faculty = this.state.recfaculty;
+    var fieldofstudy = this.state.recfieldofstudy;
+    var startyears = this.state.recstartyears;
+    var onsemester = this.state.recon_semester;
+    this.props.getRecommendations({currentfieldsofstudy, faculty, fieldofstudy, startyears, onsemester, mode})
+  }
+  getTeamRecom(event){
+    var {currentfieldsofstudy} = this.props.fieldofstudy;
+    var mode = "team";
+    var faculty = this.state.recfaculty;
+    var fieldofstudy = this.state.recfieldofstudy;
+    var startyears = this.state.recstartyears;
+    var onsemester = this.state.recon_semester;
+    this.setState({
+      mode:"Proszę czekać..."
+      })
+    this.props.getRecommendations({currentfieldsofstudy, faculty, fieldofstudy, startyears, onsemester, mode})
   }
 
   changefieldofstudy(event){
@@ -180,7 +224,7 @@ class Home extends React.Component {
       recfieldofstudy: fieldofstudyname,
       recstartyears:startyears,
       recon_semester: on_semester,
-        canSubmit: faculty && fieldofstudyname && startyears && on_semester
+      canSubmit: faculty!=='' && fieldofstudyname!=='' && startyears!=='' && on_semester!==''
       })
   }
 } 

@@ -186,3 +186,19 @@ export function updateProfessorsFailure(error) {
 export function updateProfessorsInit() {
   return {type: Types.FIELDOFSTUDY_POST_UPDATEPROFESSORS_INIT};
 }
+
+export function getRecommendations(payload) {
+  return {type: Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_GET, payload};
+}
+
+export function getRecommendationsSuccess(payload) {
+  return {type: Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_SUCCESS, payload};
+}
+
+export function getRecommendationsFailure(error) {
+  return {type: Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_FAILURE, error};
+}
+
+export function getRecommendationsInit() {
+  return {type: Types.FIELDOFSTUDY_GET_GETRECOMMENDATIONS_INIT};
+}

@@ -1,9 +1,9 @@
-import sys
+
 import spacy
 
 from .Neo4jConnector import Neo4jConnector
 
-
+#weights which can be changed
 WEIGHT_FOR_PROFESSOR_RECOMMENDATION = 1
 WEIGHT_FOR_KEYWORD_RECOMMENDATION = 1
 WEIGHT_FOR_KEYWORD_COURSE_NAME = 100

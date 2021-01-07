@@ -1,5 +1,7 @@
 from .Neo4jConnector import Neo4jConnector
 
+#weights which can be changed
+
 THRESHOLD = 10
 WEIGHT_FOR_AVERAGE_PROFESSOR_RATING = 1
 WEIGHT_FOR_AVERAGE_COURSE_RATING = 1

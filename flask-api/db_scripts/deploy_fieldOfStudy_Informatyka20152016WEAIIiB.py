@@ -1,17 +1,16 @@
 #!/usr/bin/python3.5
-import random
-import os
-
-
-# database connector
 from Engine.Neo4jConnector import Neo4jConnector
 from Engine.models.parse_syllabus_old import parse_syllabus_old
 
+"""
+
+"""
+
+
 connector = Neo4jConnector()
-# connector.drop_db()
 
 # add Field Of Study
-field_of_study = connector.add_field_of_study_if_not_exists(name="Informatyka", start_years="2017-2018", faculty="Wydział Elektrotechniki, Automatyki, Informatyki i Inżynierii Biomedycznej")
+field_of_study = connector.add_field_of_study_if_not_exists(name="Informatyka", start_years="2015-2016", faculty="Wydział Elektrotechniki, Automatyki, Informatyki i Inżynierii Biomedycznej")
 ################### add Professors ####################################
 professor1 = connector.add_professor_if_not_exists(name="prof. dr hab. inż. Mitkowski Wojciech")
 professor2 = connector.add_professor_if_not_exists(name="dr inż. Cmiel Adam")
@@ -321,134 +320,3 @@ connector.connect_professor_teaches_course(professor43, course82)
 connector.connect_professor_teaches_course(professor12, course83)
 connector.connect_professor_teaches_course(professor12, course84)
 connector.connect_professor_teaches_course(professor31, course85)
-
-student = connector.add_student_if_not_exists(index_number=200003, name="Tester", email="email", password="pass", api_key="key")
-connector.connect_student_evaluates_course(student, course1, random.randint(1,5)) # Algebra liniowa i geometria analityczna
-connector.connect_student_evaluates_course(student, course2, random.randint(1,5)) # Analiza matematyczna
-connector.connect_student_evaluates_course(student, course3, random.randint(1,5)) # Matematyka dyskretna
-connector.connect_student_evaluates_course(student, course4, random.randint(1,5)) # Wstęp do informatyki
-connector.connect_student_evaluates_course(student, course5, random.randint(1,5)) # Języki i metody programowania 1
-connector.connect_student_evaluates_course(student, course6, random.randint(1,5)) # Wstęp do systemów uniksowych
-connector.connect_student_evaluates_course(student, course7, random.randint(1,5)) # Narzędzia pracy grupowej
-connector.connect_student_evaluates_course(student, course8, random.randint(1,5)) # Wychowanie fizyczne 1
-connector.connect_student_evaluates_course(student, course9, random.randint(1,5)) # Fizyka 1
-connector.connect_student_evaluates_course(student, course10, random.randint(1,5)) # Logika
-connector.connect_student_evaluates_course(student, course11, random.randint(1,5)) # Rachunek prawdopodobieństwa i statystyka
-connector.connect_student_evaluates_course(student, course12, random.randint(1,5)) # Równania różniczkowe
-connector.connect_student_evaluates_course(student, course13, random.randint(1,5)) # Języki i metody programowania 2
-connector.connect_student_evaluates_course(student, course14, random.randint(1,5)) # Algorytmy i struktury danych
-connector.connect_student_evaluates_course(student, course15, random.randint(1,5)) # Podstawy grafiki komputerowej
-connector.connect_student_evaluates_course(student, course16, random.randint(1,5)) # Skład dokumentów w środowisku LaTeX
-connector.connect_student_evaluates_course(student, course17, random.randint(1,5)) # Wychowanie fizyczne 2
-# connector.connect_student_evaluates_course(student, course18, random.randint(1,5)) # Język francuski B-2
-connector.connect_student_evaluates_course(student, course19, random.randint(1,5)) # Język angielski B-2
-# connector.connect_student_evaluates_course(student, course20, random.randint(1,5)) # Język hiszpański B-2
-# connector.connect_student_evaluates_course(student, course21, random.randint(1,5)) # Język niemiecki B-2
-# connector.connect_student_evaluates_course(student, course22, random.randint(1,5)) # Język rosyjski B-2
-connector.connect_student_evaluates_course(student, course23, random.randint(1,5)) # Fizyka 2
-connector.connect_student_evaluates_course(student, course24, random.randint(1,5)) # Programowanie w logice
-connector.connect_student_evaluates_course(student, course25, random.randint(1,5)) # Programowanie obiektowe
-connector.connect_student_evaluates_course(student, course26, random.randint(1,5)) # Architektury komputerów
-connector.connect_student_evaluates_course(student, course27, random.randint(1,5)) # Metody numeryczne
-connector.connect_student_evaluates_course(student, course28, random.randint(1,5)) # Systemy dynamiczne
-connector.connect_student_evaluates_course(student, course29, random.randint(1,5)) # Języki i technologie webowe
-connector.connect_student_evaluates_course(student, course30, random.randint(1,5)) # Bazy danych
-connector.connect_student_evaluates_course(student, course31, random.randint(1,5)) # Wychowanie fizyczne 3
-# connector.connect_student_evaluates_course(student, course32, random.randint(1,5)) # Język francuski B-2
-connector.connect_student_evaluates_course(student, course33, random.randint(1,5)) # Język angielski B-2
-# connector.connect_student_evaluates_course(student, course34, random.randint(1,5)) # Język hiszpański B-2
-# connector.connect_student_evaluates_course(student, course35, random.randint(1,5)) # Język niemiecki B-2
-# connector.connect_student_evaluates_course(student, course36, random.randint(1,5)) # Język rosyjski B-2
-connector.connect_student_evaluates_course(student, course37, random.randint(1,5)) # Analiza numeryczna i symulacja systemów
-connector.connect_student_evaluates_course(student, course38, random.randint(1,5)) # Sieci komputerowe
-connector.connect_student_evaluates_course(student, course39, random.randint(1,5)) # Podstawy automatyki
-connector.connect_student_evaluates_course(student, course40, random.randint(1,5)) # Symulacja dyskretna systemów złożonych
-connector.connect_student_evaluates_course(student, course41, random.randint(1,5)) # Programowanie mikrokontrolerów i mikroprocesorów
-connector.connect_student_evaluates_course(student, course42, random.randint(1,5)) # Systemy operacyjne
-connector.connect_student_evaluates_course(student, course43, random.randint(1,5)) # Programowanie funkcyjne
-# connector.connect_student_evaluates_course(student, course44, random.randint(1,5)) # Język francuski B-2
-connector.connect_student_evaluates_course(student, course45, random.randint(1,5)) # Język angielski B-2
-# connector.connect_student_evaluates_course(student, course46, random.randint(1,5)) # Język hiszpański B-2
-# connector.connect_student_evaluates_course(student, course47, random.randint(1,5)) # Język niemiecki B-2
-# connector.connect_student_evaluates_course(student, course48, random.randint(1,5)) # Język rosyjski B-2
-# connector.connect_student_evaluates_course(student, course49, random.randint(1,5)) # Podstawy negocjacji
-# connector.connect_student_evaluates_course(student, course50, random.randint(1,5)) # Religie świata: człowiek a sacrum
-connector.connect_student_evaluates_course(student, course51, random.randint(1,5)) # Podstawy elektroniki cyfrowej
-connector.connect_student_evaluates_course(student, course52, random.randint(1,5)) # Inżynieria oprogramowania
-connector.connect_student_evaluates_course(student, course53, random.randint(1,5)) # Programowanie współbieżne i rozproszone
-connector.connect_student_evaluates_course(student, course54, random.randint(1,5)) # Przetwarzanie obrazów cyfrowych
-connector.connect_student_evaluates_course(student, course55, random.randint(1,5)) # Podstawy sztucznej inteligencji
-connector.connect_student_evaluates_course(student, course56, random.randint(1,5)) # Lingwistyka formalna i automaty
-connector.connect_student_evaluates_course(student, course57, random.randint(1,5)) # Badania operacyjne i komputerowe wspomaganie decyzji
-connector.connect_student_evaluates_course(student, course58, random.randint(1,5)) # Wprowadzenie do systemów ERP
-connector.connect_student_evaluates_course(student, course59, random.randint(1,5)) # Rozwiązania IT w inżynierii produkcji
-# connector.connect_student_evaluates_course(student, course60, random.randint(1,5)) # Entrepreneurship And Startups For Technical Students
-# connector.connect_student_evaluates_course(student, course61, random.randint(1,5)) # Analiza i modelowanie oprogramowania
-# connector.connect_student_evaluates_course(student, course62, random.randint(1,5)) # Design Patterns
-# connector.connect_student_evaluates_course(student, course63, random.randint(1,5)) # Praktyki (4 tygodnie po VI semestrze)
-# connector.connect_student_evaluates_course(student, course64, random.randint(1,5)) # Prawo autorskie i patentowe
-# connector.connect_student_evaluates_course(student, course65, random.randint(1,5)) # Teoria Obliczeń
-# connector.connect_student_evaluates_course(student, course66, random.randint(1,5)) # Teoria kompilacji i kompilatory
-# connector.connect_student_evaluates_course(student, course67, random.randint(1,5)) # Studio projektowe 1
-# connector.connect_student_evaluates_course(student, course68, random.randint(1,5)) # Wprowadzenie do technologii mobilnych
-# # connector.connect_student_evaluates_course(student, course69, random.randint(1,5)) # SOA w projektowaniu i implementacji oprogramowania
-# # connector.connect_student_evaluates_course(student, course70, random.randint(1,5)) # Systemy czasu rzeczywistego
-# # connector.connect_student_evaluates_course(student, course71, random.randint(1,5)) # Systemy wbudowane
-# # connector.connect_student_evaluates_course(student, course72, random.randint(1,5)) # Systemy rekonfigurowalne
-# connector.connect_student_evaluates_course(student, course73, random.randint(1,5)) # Interfejsy multimodalne
-# connector.connect_student_evaluates_course(student, course74, random.randint(1,5)) # Inteligencja obliczeniowa w analizie danych cyfrowych
-# connector.connect_student_evaluates_course(student, course75, random.randint(1,5)) # Aspekty prawne i organizacja przedsiębiorstwa
-# connector.connect_student_evaluates_course(student, course76, random.randint(1,5)) # Pracownia inżynierska dyplomowa
-# connector.connect_student_evaluates_course(student, course77, random.randint(1,5)) # Praca dyplomowa
-# connector.connect_student_evaluates_course(student, course78, random.randint(1,5)) # Studio projektowe 2
-# # connector.connect_student_evaluates_course(student, course79, random.randint(1,5)) # Systemy informatyczne ERP
-# connector.connect_student_evaluates_course(student, course80, random.randint(1,5)) # Systemy i technologie wirtualizacji
-# connector.connect_student_evaluates_course(student, course81, random.randint(1,5)) # Hurtownie danych
-# connector.connect_student_evaluates_course(student, course82, random.randint(1,5)) # Multimedia i transmisje multimedialne
-# # connector.connect_student_evaluates_course(student, course83, random.randint(1,5)) # Praca w kole naukowym
-# # connector.connect_student_evaluates_course(student, course84, random.randint(1,5)) # Prowadzenie badań naukowych
-# # connector.connect_student_evaluates_course(student, course85, random.randint(1,5)) # Systemy analizy biznesowej
-connector.connect_student_rates_professor(student, professor1, random.randint(1,5)) # name="prof. dr hab. inż. Mitkowski Wojciech")
-connector.connect_student_rates_professor(student, professor2, random.randint(1,5)) # name="dr inż. Cmiel Adam")
-connector.connect_student_rates_professor(student, professor3, random.randint(1,5)) # name="dr hab. Bielecki Andrzej")
-connector.connect_student_rates_professor(student, professor4, random.randint(1,5)) # name="dr hab. Horzyk Adrian")
-connector.connect_student_rates_professor(student, professor5, random.randint(1,5)) # name="Szwed Piotr")
-connector.connect_student_rates_professor(student, professor6, random.randint(1,5)) # name="prof. dr hab. inż. Nalepa Grzegorz J. ")
-connector.connect_student_rates_professor(student, professor7, random.randint(1,5)) # name="prof. dr hab. Kotulski Leszek")
-connector.connect_student_rates_professor(student, professor8, random.randint(1,5)) # name="mgr Śliwa Jacek")
-connector.connect_student_rates_professor(student, professor9, random.randint(1,5)) # name="prof. nadzw. dr hab. inż. Szczerbowska-Boruchowska Magdalena")
-connector.connect_student_rates_professor(student, professor10, random.randint(1,5)) # name="prof. dr hab. inż. Ligęza Antoni")
-connector.connect_student_rates_professor(student, professor11, random.randint(1,5)) # name="Izworski Andrzej")
-connector.connect_student_rates_professor(student, professor12, random.randint(1,5)) # name="Kułakowski Konrad")
-connector.connect_student_rates_professor(student, professor13, random.randint(1,5)) # name="dr hab. inż. Szuba Tadeusz")
-connector.connect_student_rates_professor(student, professor14, random.randint(1,5)) # name="prof. dr hab. Szpyrka Marcin")
-connector.connect_student_rates_professor(student, professor15, random.randint(1,5)) # name="mgr Krukiewicz-Gacek Anna")
-connector.connect_student_rates_professor(student, professor16, random.randint(1,5)) # name="JAMRÓZ DARIUSZ")
-connector.connect_student_rates_professor(student, professor17, random.randint(1,5)) # name="Dudek-Dyduch Ewa")
-connector.connect_student_rates_professor(student, professor18, random.randint(1,5)) # name="Wojnicki Igor")
-connector.connect_student_rates_professor(student, professor19, random.randint(1,5)) # name="Miller Janusz")
-connector.connect_student_rates_professor(student, professor20, random.randint(1,5)) # name="Turek Michał")
-connector.connect_student_rates_professor(student, professor21, random.randint(1,5)) # name="prof. dr hab. inż. Byrski Witold")
-connector.connect_student_rates_professor(student, professor22, random.randint(1,5)) # name="Wąs Jarosław")
-connector.connect_student_rates_professor(student, professor23, random.randint(1,5)) # name="Bubliński Zbigniew")
-connector.connect_student_rates_professor(student, professor24, random.randint(1,5)) # name="Matyasik Piotr ")
-connector.connect_student_rates_professor(student, professor25, random.randint(1,5)) # name="dr Maksymowicz Agata")
-connector.connect_student_rates_professor(student, professor26, random.randint(1,5)) # name="dr Stark Katarzyna")
-connector.connect_student_rates_professor(student, professor27, random.randint(1,5)) # name="dr inż. Wiśniewski Bogusław")
-connector.connect_student_rates_professor(student, professor28, random.randint(1,5)) # name="Klimek Radosław")
-connector.connect_student_rates_professor(student, professor29, random.randint(1,5)) # name="prof. dr hab. inż. Gorgoń Marek")
-connector.connect_student_rates_professor(student, professor30, random.randint(1,5)) # name="dr inż. Adrian Weronika T.")
-connector.connect_student_rates_professor(student, professor31, random.randint(1,5)) # name="dr inż. Kucharska Edyta")
-connector.connect_student_rates_professor(student, professor32, random.randint(1,5)) # name="Kuczek Aleksander")
-connector.connect_student_rates_professor(student, professor33, random.randint(1,5)) # name="Mrówka Rafał")
-connector.connect_student_rates_professor(student, professor34, random.randint(1,5)) # name="dr inż. Gajer Mirosław")
-connector.connect_student_rates_professor(student, professor35, random.randint(1,5)) # name="mgr inż. Fus Andrzej")
-connector.connect_student_rates_professor(student, professor36, random.randint(1,5)) # name="Sędziwy Adam")
-connector.connect_student_rates_professor(student, professor37, random.randint(1,5)) # name="Skrzyński Paweł")
-connector.connect_student_rates_professor(student, professor38, random.randint(1,5)) # name="Szmuc Tomasz")
-connector.connect_student_rates_professor(student, professor39, random.randint(1,5)) # name="Przybyło Jaromir")
-connector.connect_student_rates_professor(student, professor40, random.randint(1,5)) # name="dr inż. Baran Mateusz")
-connector.connect_student_rates_professor(student, professor41, random.randint(1,5)) # name="dr inż. Kraszewska Marta")
-connector.connect_student_rates_professor(student, professor42, random.randint(1,5)) # name="Bobek Szymon")
-connector.connect_student_rates_professor(student, professor43, random.randint(1,5)) # name="dr Pałka Dariusz")
-

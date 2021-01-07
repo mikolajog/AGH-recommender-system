@@ -5,35 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b47cc3a6-9d29-4b17-9126-685828de51f6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/CollaborationFiletring.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/CollaborationFiletring.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/ContentBasedFiltering.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/ContentBasedFiltering.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Engine/Neo4jConnector.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/Neo4jConnector.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Engine/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/RecommendationEngine.py" beforeDir="false" afterPath="$PROJECT_DIR$/Engine/RecommendationEngine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Engine/main.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db_scripts/deploy_fieldOfStudy_Informatyka20152016WEAIIiB.py" beforeDir="false" afterPath="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20152016WEAIIiB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20162017WEAIIiB.py" beforeDir="false" afterPath="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20162017WEAIIiB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20172018WEAIIiB.py" beforeDir="false" afterPath="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20172018WEAIIiB.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/bin/pip" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/pip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/bin/pip3" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/pip3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/bin/pip3.6" beforeDir="false" afterPath="$PROJECT_DIR$/venv/bin/pip3.6" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/pip-20.3.1.dist-info/INSTALLER" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/pip-20.3.1.dist-info/LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/pip-20.3.1.dist-info/METADATA" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/pip-20.3.1.dist-info/RECORD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/pip-20.3.1.dist-info/WHEEL" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/pip-20.3.1.dist-info/entry_points.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/lib/python3.6/site-packages/pip-20.3.1.dist-info/top_level.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/components/validation/InputValidator.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/validation/InputValidator.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/CoursesRatings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/CoursesRatings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/FieldOfStudy.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/FieldOfStudy.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/Home.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/Keywords.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/Keywords.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/ProfessorsRatings.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/ProfessorsRatings.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/pages/Signup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/pages/Signup.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/redux/actions/NotificationActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/redux/actions/NotificationActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/redux/sagas/errorFlow.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/redux/sagas/errorFlow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/styles/foundation/scss/foundation/_functions.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/styles/foundation/scss/foundation/_functions.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/utils/ValidationUtils.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/utils/ValidationUtils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db_scripts/deploy_students.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20152016WEAIIiB.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20162017WEAIIiB.py" beforeDir="false" afterPath="$PROJECT_DIR$/db_scripts/deploy_fieldOfStudy_Informatyka20152016WEAIIiB.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20172018WEAIIiB.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +52,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/venv/bin/python" />
@@ -96,7 +80,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/deploy_fieldOfStudy_Informatyka20152016WEAIIiB.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/db_scripts/deploy_fieldOfStudy_Informatyka20152016WEAIIiB.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -216,7 +200,7 @@
       <workItem from="1607242635283" duration="13313000" />
       <workItem from="1607690947803" duration="8806000" />
       <workItem from="1607862940069" duration="30388000" />
-      <workItem from="1609866575347" duration="6511000" />
+      <workItem from="1609866575347" duration="8617000" />
     </task>
     <servers />
   </component>

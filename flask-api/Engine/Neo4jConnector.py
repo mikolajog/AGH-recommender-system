@@ -14,7 +14,7 @@ import spacy
 
 class Neo4jConnector():
     def __init__(self):
-        config.DATABASE_URL = 'bolt://neo4j:Password123@localhost:7687'
+        config.DATABASE_URL = 'bolt://neo4j:Password123@localhost:7687' # change for bolt://username:password@localhost:7687
 
     def drop_db(self):
         clear_neo4j_database(db)

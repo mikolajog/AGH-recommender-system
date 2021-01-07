@@ -1,4 +1,5 @@
 from neomodel import config, db, clear_neo4j_database
+from stempel import StempelStemmer
 
 from .models import ValuedRelationship
 from .models.Course import Course
@@ -8,7 +9,7 @@ from .models.Professor import Professor
 from .models.Student import Student
 
 
-# import spacy
+import spacy
 
 
 class Neo4jConnector():
@@ -50,6 +51,11 @@ class Neo4jConnector():
             return self.get_course(name, taught_on_semester, is_elective)
 
     def add_keyword_if_not_exists(self, word):
+        if word[0]!="\"":
+            stemmer = StempelStemmer.polimorf()
+            word = stemmer.stem(word)
+        else:
+            word = word[1:-1]
         if self.get_keyword(word) is None:
             return Keyword(word=word).save()
         else:

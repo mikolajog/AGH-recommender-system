@@ -12,38 +12,6 @@ export default function* watchErrors(getState) {
 }
 
 function createErrorNotification(err) {
-  if(err.status === 500) {
-    return NotificationActions.createError(err.statusText || 'Internal Server Error');
-  }
-
-  if (err.status !== 401) {
-    var errMessages = [];
-    if (err.data) {
-      try {
-        for (var prop in err.data) {
-          var msg = err.data[prop];
-          if (_.isArray(msg)) {
-            msg = msg.join(' ');
-          }
-
-          errMessages.push(`${prop}: ${msg}`);
-        }
-      } catch (ex) {
-        console.error(ex);
-      }
-    }
-
-    var errMessage = '';
-    if (errMessages.length === 1) {
-      errMessage = errMessages[0];
-    }
-    else {
-      errMessage = errMessages.join('\n\n');
-    }
-
-    var message = err.message || errMessage || (err.responseText ? ('Error: ' + err.responseText) : 'Error (see console logs)');
-
-    return NotificationActions.createError(message);
-  }
+    return NotificationActions.createError("Złe dane logowania!");
 }
 

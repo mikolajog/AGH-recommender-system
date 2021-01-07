@@ -40,6 +40,7 @@ class Home extends React.Component {
   componentDidMount(){ 
     if(UserSession.getToken()===null){this.props.history.push('/login');}
     else{this.props.getProfile();}
+    this.props.getProfile();
   }
 
   render() {
@@ -57,6 +58,7 @@ class Home extends React.Component {
     var {index_number, password, canSubmit} = this.props;
     var {errors} = this.props;
     var {fieldofstudy} = this.state;
+    var currentfieldsofstudy=[];
     var {errors, possiblefaculties, possiblefieldsofstudies,currentfieldsofstudy, isFetching} = this.props.fieldofstudy;
     if(Array.from(currentfieldsofstudy).length >0){
       var current_fields = Array.from(currentfieldsofstudy).map((anObjectMapped, index) => {
@@ -134,6 +136,19 @@ class Home extends React.Component {
   <div className="nt-box">
     <div className="nt-box-title">
       Rekomendacje
+      <p>W celu rekomendacji przedmiotów uzupełnij dane w zakładkach: 
+      <ul>
+        <li><Link to="/fieldofstudy" >Kierunki studiów</Link></li>
+        <li><Link to="/keywords" >Słowa kluczowe</Link></li>
+        <li><Link to="/coursesratings" >Oceny przedmiotów</Link></li>
+        <li><Link to="/professorsratings" >Oceny Profesorów</Link></li>
+      </ul>
+      Wybierz kierunek studiów oraz sposób rekomendacji!
+      <ul>
+        <li>Indywidualny - rekomendacja tylko na podstawie własnego profilu</li>
+        <li>Zespołowy - rekomendacja z wykorzystaniem danych innych użytkowników</li>
+        <li>Mieszany - rekomendacja z użyciem danych własnego profilu oraz danych innych użytkowników</li>
+        </ul> </p>
     </div>
     <div className="nt-box-row">
     <div className="row">
@@ -159,7 +174,7 @@ class Home extends React.Component {
                       name="submit-login"
                       onClick={this.getHybridRecom}
                       disabled={!this.state.canSubmit}>
-                Hybrydowy
+                Mieszany
               </button>
               &nbsp;
               <button className="btn"

@@ -14,7 +14,8 @@ class Signup extends React.Component {
       index_number: '',
       name: '',
       email: '',
-      password: ''
+      password: '',
+      canSubmit:false
     };
 
     this.createUser = this.createUser.bind(this);
@@ -59,6 +60,10 @@ class Signup extends React.Component {
     if (password !== confirmPassword) {
       return 'Both passwords must be equal';
     }
+      var canSubmit = this.state.password && this.state.name;
+      this.setState({
+      canSubmit: canSubmit
+    });
   }
 
   render() {
@@ -75,7 +80,7 @@ class Signup extends React.Component {
               <InputValidator fieldName="Numer indeksu"
                               errors={errors.indexnumber}
                               shouldValidateOnBlur={true}>
-              <input type="text"
+              <input type="indexnumber"
                      name="indexnumber"
                      required
                      placeholder="Numer indeksu*"
@@ -87,7 +92,7 @@ class Signup extends React.Component {
               <InputValidator fieldName="Imię i nazwisko"
                               errors={errors.name}
                               shouldValidateOnBlur={true}>
-              <input type="text"
+              <input type="names"
                      name="name-surname"
                      required
                      placeholder="Imię i nazwisko*"
@@ -99,7 +104,7 @@ class Signup extends React.Component {
               <InputValidator fieldName="E-mail"
                               errors={errors.name}
                               shouldValidateOnBlur={true}>
-              <input type="text"
+              <input type="email"
                      name="email"
                      required
                      placeholder="Adres e-mail*"
@@ -132,7 +137,9 @@ class Signup extends React.Component {
               <button type="button"
                       name="btn-create"
                       className="ba-default-button"
-                      onClick={this.createUser}>
+                      onClick={this.createUser}
+                      disabled={!this.state.canSubmit}>
+                      
                 Utwórz konto
               </button>
             </div>

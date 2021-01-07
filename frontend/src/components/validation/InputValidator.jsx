@@ -86,8 +86,12 @@ class InputValidator extends React.Component {
         message = this.getRequiredErrorMsg()
       } else if (type === 'email') {
         message = ValidationUtils.checkEmail(value)
-      } else if (type === 'url') {
-        message = ValidationUtils.checkUrl(value)
+      } else if (type === 'password') {
+        message = ValidationUtils.checkPass(value)
+      } else if (type === 'names') {
+        message = ValidationUtils.checkName(value)
+      } else if (type === 'keyword') {
+          message = ValidationUtils.checkKeyword(value)
       } else if (type === 'number') {
         const {min, max} = input.props
         if (min && Number(value) < Number(min)) {
@@ -96,6 +100,9 @@ class InputValidator extends React.Component {
         if (max && Number(value) > Number(max)) {
           message = (fieldName || 'This field') + ' is greater than ' + max
         }
+      }
+      else if (type === 'indexnumber') {
+        message = ValidationUtils.checkIndex(value)
       }
     }
 
@@ -115,7 +122,7 @@ class InputValidator extends React.Component {
   }
 
   getRequiredErrorMsg() {
-    return (this.props.fieldName || 'Pole') + ' jest wymagane'
+    return ('Pole ' + this.props.fieldName.toLowerCase() || 'Pole') + ' jest wymagane'
   }
 
   onBlurValidate() {

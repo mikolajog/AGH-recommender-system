@@ -166,6 +166,7 @@ class CoursesRatings extends React.Component {
             <div className="nt-box">
               <div className="nt-box-title">
               Oceny kursów
+              <p>Wybierz kierunek studiów i wprowadź ocenę w skali 1-5 (5 to najlepsza ocena) dla każdego kursu obowiązkowego i wybranych kursów elektywnych.</p>
               </div>
               <select name="delete" id="delete-select" onClick={this.setDatasFieldofstudy}>
     {current_fields}

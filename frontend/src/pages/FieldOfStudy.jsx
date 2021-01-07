@@ -95,6 +95,7 @@ class FieldOfStudy extends React.Component {
             <div className="nt-box">
               <div className="nt-box-title">
               Obecne kierunki studiów
+              <p>Usuń dodany kierunek studiów.</p>
               </div>
               <select name="delete" id="delete-select" onClick={this.deleteSelect}>
     {current_fields}
@@ -118,6 +119,7 @@ class FieldOfStudy extends React.Component {
             <div className="nt-box">
               <div className="nt-box-title">
                 Dodaj nowy kierunek
+                <p>Dodaj kierunek studiów wybierając wydział, nazwę kierunku, rok akademicki rozpoczęcia oraz numer semestru, na którym jesteś.</p>
               </div>
               <div className="nt-box-row">
 

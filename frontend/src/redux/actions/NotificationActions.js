@@ -23,6 +23,17 @@ export function createError(message) {
   };
 }
 
+export function createAuthError(message) {
+  return {
+    type: NotificationActionTypes.CREATE_NOTIFICATION,
+    notification: {
+      id: _.uniqueId(),
+      message:message,
+      type: NotificationType.error
+    }
+  };
+}
+
 export function createSuccess(message) {
   return {
     type: NotificationActionTypes.CREATE_NOTIFICATION,

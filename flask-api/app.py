@@ -198,9 +198,11 @@ class Login(Resource):
 
 class ApiDocs(Resource):
     def get(self, path=None):
+        recom = RecommendationEngine().get_and_connect_keywords_to_courses()
         if not path:
             path = 'index.html'
         return send_from_directory('swaggerui', path)
+
 
 class KeywordModelResponse(Schema):
     type = 'object'

@@ -120,6 +120,7 @@ class Keywords extends React.Component {
           <div className="nt-box">
             <div className="nt-box-title">
               Dodaj słowo kluczowe
+              <p>Dodaj pojedyncze słowa kluczowe związane z Twoimi zainteresowaniami, umiejętnościami lub planowaną karierą.</p>
             </div>
             <div className="nt-box-row">
             <div >
@@ -127,11 +128,11 @@ class Keywords extends React.Component {
             <div className="small-12 medium-10 large-10 columns">
               <InputValidator fieldName="Słowo"
                               errors={null}
-                              shouldValidateOnBlur={false}>
-                <input ref={(ref) => this.inputword= ref} type="text"
+                              shouldValidateOnBlur={true}>
+                <input ref={(ref) => this.inputword= ref} 
+                type="text"
                        name="wordinput"
                        placeholder="Wpisz słowo"
-                       required
                        onChange={this.changeWord}/>
               </InputValidator>
               </div> 

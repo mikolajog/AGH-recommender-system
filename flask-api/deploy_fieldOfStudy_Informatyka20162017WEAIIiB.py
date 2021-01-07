@@ -5,7 +5,7 @@ from Engine.Neo4jConnector import Neo4jConnector
 from Engine.models.parse_syllabus_old import parse_syllabus_old
 
 connector = Neo4jConnector()
-
+connector.drop_db()
 # add Field Of Study
 field_of_study = connector.add_field_of_study_if_not_exists(name="Informatyka", start_years="2016-2017", faculty="Wydział Elektrotechniki, Automatyki, Informatyki i Inżynierii Biomedycznej")
 

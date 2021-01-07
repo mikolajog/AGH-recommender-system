@@ -8,7 +8,7 @@ from Engine.Neo4jConnector import Neo4jConnector
 from Engine.models.parse_syllabus_old import parse_syllabus_old
 
 connector = Neo4jConnector()
-connector.drop_db()
+# connector.drop_db()
 
 # add Field Of Study
 field_of_study = connector.add_field_of_study_if_not_exists(name="Informatyka", start_years="2017-2018", faculty="Wydział Elektrotechniki, Automatyki, Informatyki i Inżynierii Biomedycznej")
@@ -322,7 +322,7 @@ connector.connect_professor_teaches_course(professor12, course83)
 connector.connect_professor_teaches_course(professor12, course84)
 connector.connect_professor_teaches_course(professor31, course85)
 
-student = connector.add_student_if_not_exists(index_number=200003, name="Tester", is_on_semester=5)
+student = connector.add_student_if_not_exists(index_number=200003, name="Tester", email="email", password="pass", api_key="key")
 connector.connect_student_evaluates_course(student, course1, random.randint(1,5)) # Algebra liniowa i geometria analityczna
 connector.connect_student_evaluates_course(student, course2, random.randint(1,5)) # Analiza matematyczna
 connector.connect_student_evaluates_course(student, course3, random.randint(1,5)) # Matematyka dyskretna

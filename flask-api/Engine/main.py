@@ -1,5 +1,4 @@
 from .Neo4jConnector import Neo4jConnector
-from .RecommendationEngine import RecommendationEngine
 
 
 
@@ -11,8 +10,8 @@ connector = Neo4jConnector()
 # connector.add_field_of_study_if_not_exists(name="Informatyka", start_years="2018-2019", faculty="Wydział Elektrotechniki, Automatyki, Informatyki i Inżynierii Biomedycznej")
 # connector.add_field_of_study_if_not_exists(name="Zarządzanie", start_years="2018-2019", faculty="Wydział Zarządzania")
 # connector.add_field_of_study_if_not_exists(name="Matematyka Stosowana", start_years="2018-2019", faculty="Wydział Matematyki Stosowanej")
-# connector.drop_db()
-engine = RecommendationEngine().load_db_scripts()
+connector.drop_db()
+# engine = RecommendationEngine().load_db_scripts()
 # engine = RecommendationEngine().load_students()
 
 # engine = RecommendationEngine()

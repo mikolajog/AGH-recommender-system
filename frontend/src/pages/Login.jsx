@@ -68,7 +68,7 @@ class Login extends React.Component {
               <InputValidator fieldName="Numer indeksu"
                               errors={errors.username}
                               shouldValidateOnBlur={true}>
-                <input type="text"
+                <input type="indexnumber"
                        name="index_number"
                        placeholder="Numer indeksu*"
                        required
@@ -78,7 +78,7 @@ class Login extends React.Component {
             </div>
             <div className="row">
               <InputValidator fieldName="Hasło"
-                              errors={errors.password}
+                              errors={errors.data}
                               shouldValidateOnBlur={true}>
                 <input type="password"
                        name="password"
